@@ -1,17 +1,16 @@
-body{
-    background-image: url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg");
+body {
+    background-image: url("http://i.imgur.com/voR8Lgi.jpg");
     background-size: 100%;
     background-repeat: false;
     height: 100vh;
     width: 100vw;
     margin: 0px;
     *{
-        //border: solid 1px orange;
-        box-shadow: inset 5px 5px 5px orange;
+       box-shadow: inset 5px 5px 5px orange;
     }
 }
 
-header{
+header {
     position: fixed;
     left: 0%;
     top: 0%;
@@ -22,51 +21,159 @@ header{
     justify-content: center;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.3);
-    
 }
 
-#container{
+#container {
     background-color: rgba(255, 255, 255, 0.3);
     width: 100%;
     height: 95%;
     position: fixed;
     top: 5%;
     left: 0%;
-    div{
+    div {
         position: relative;
         float: left;
     }
 }
-#left-container{
+
+#left-container {
     width: 30%;
     height: 100%;
-    div{
+    div {
         position: relative;
     }
-    #search-container{
+    #search-container {
         width: 100%;
         height: 10%;
     }
-    #list-container{
+    #list-container {
         width: 100%;
         height: 90%;
+        overflow: auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: rgba(245, 222, 179, 0.452);
+        .item-container {
+            width: 20%;
+            margin: 1.5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-content: center;
+            position: relative;
+            height: 15%;
+            background-color: rgba(96, 96, 252, 0.459);
+        }
+        .name-container {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0%;
+        }
+        img {
+            position: relative;
+            border-radius: 15px;
+            width: 80%;
+            height: auto;
+            margin: auto;
+        }
+        span {
+            height: auto;
+            width: 100%;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+            font-size: 1em;
+        }
+    }
+    .champion-container {
+        width: 20%;
+        margin: 1.5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        position: relative;
+        height: 15%;
+        //background-color: rgba(96, 96, 252, 0.459);
+    }
+    .name-container {
+        width: 100%;
+        height: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0%;
+    }
+    img {
+        position: relative;
+        border-radius: 15px;
+        width: 80%;
+        height: auto;
+        margin: auto;
+    }
+    span {
+        height: auto;
+        width: 100%;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 1em;
     }
 }
-#editor-container{
-    width:70%;
-    height:33%
+
+#editor-container {
+    width: 70%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    div{
+        background-color: rgba(245, 222, 179, 0.288);
+        margin: auto;
+    }
+    #selected-champion{
+        max-width: 128px;
+        max-height: 128px;
+        width: 10%;
+        height: 40%;
+        border: solid black 1px;
+        text-align: center;
+        border-radius: 15px;
+    }
+    #selected-items{
+        max-width: 332px;
+        max-height: 222px;
+        width: 30%;
+        height: 80%;
+        .item-slot{
+            width: 33.333%;
+            height: 50%;
+        }
+    }
+    #rune-container{
+        width: 30%;
+        height: 80%;
+    }
 }
-#result-container{
+
+#result-container {
     width: 70%;
     height: 34%;
-    #stats-container{
+    #stats-container {
         position: relative;
         width: 30%;
         height: 100%;
         float: right;
     }
 }
-#information-container{
+
+#information-container {
     width: 70%;
     height: 33%;
 }

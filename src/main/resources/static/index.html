@@ -5,7 +5,7 @@
     <title>LegendBuilder</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="body">
 <header><span>Välkommen till LegendBuilder!</span></header>
 <div id="container">
     <div id="left-container">
@@ -13,13 +13,25 @@
         <div id="list-container"></div>
     </div>
 
-    <div id="editor-container"></div>
+    <div id="editor-container">
+        <div id="selected-champion">Select a Champion!</div>
+        <div id="selected-items">
+            <div id="item-slot-1" class="item-slot">slot 1</div>
+            <div id="item-slot-2" class="item-slot">slot 2</div>
+            <div id="item-slot-3" class="item-slot">slot 3</div>
+            <div id="item-slot-4" class="item-slot">slot 4</div>
+            <div id="item-slot-5" class="item-slot">slot 5</div>
+            <div id="item-slot-6" class="item-slot">slot 6</div>
+        </div>
+        <div id="rune-container">Runes</div>
+    </div>
 
     <div id="result-container">
         <div id="stats-container"></div>
     </div>
-    
+
     <div id="information-container"></div>
 </div>
+<script src="./popTest.js"></script>
 </body>
 </html>

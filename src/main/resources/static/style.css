@@ -1,5 +1,5 @@
 body {
-  background-image: url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg");
+  background-image: url("http://i.imgur.com/voR8Lgi.jpg");
   background-size: 100%;
   background-repeat: false;
   height: 100vh;
@@ -55,11 +55,128 @@ header {
 #left-container #list-container {
   width: 100%;
   height: 90%;
+  overflow: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgba(245, 222, 179, 0.452);
+}
+
+#left-container #list-container .item-container {
+  width: 20%;
+  margin: 1.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  position: relative;
+  height: 15%;
+  background-color: rgba(96, 96, 252, 0.459);
+}
+
+#left-container #list-container .name-container {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0%;
+}
+
+#left-container #list-container img {
+  position: relative;
+  border-radius: 15px;
+  width: 80%;
+  height: auto;
+  margin: auto;
+}
+
+#left-container #list-container span {
+  height: auto;
+  width: 100%;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+#left-container .champion-container {
+  width: 20%;
+  margin: 1.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  position: relative;
+  height: 15%;
+}
+
+#left-container .name-container {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0%;
+}
+
+#left-container img {
+  position: relative;
+  border-radius: 15px;
+  width: 80%;
+  height: auto;
+  margin: auto;
+}
+
+#left-container span {
+  height: auto;
+  width: 100%;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1em;
 }
 
 #editor-container {
   width: 70%;
   height: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}
+
+#editor-container div {
+  background-color: rgba(245, 222, 179, 0.288);
+  margin: auto;
+}
+
+#editor-container #selected-champion {
+  max-width: 128px;
+  max-height: 128px;
+  width: 10%;
+  height: 40%;
+  border: solid black 1px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+#editor-container #selected-items {
+  max-width: 332px;
+  max-height: 222px;
+  width: 30%;
+  height: 80%;
+}
+
+#editor-container #selected-items .item-slot {
+  width: 33.333%;
+  height: 50%;
+}
+
+#editor-container #rune-container {
+  width: 30%;
+  height: 80%;
 }
 
 #result-container {
