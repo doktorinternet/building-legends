@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link href="Stylesheet.css" rel="stylesheet" type="text/css"></link>
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet"></link>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet"></link>
+</head>
+<body>
+<a href="/index.html" id="header"><h1>Sten Sax Påse</h1></a>
+<h5>REGISTRERA</h5>
+<div>
+    <p th:text="${registrationError}"></p>
+</div>
+<form action="newuser" method="post">
+    Ange användarnamn: <input name="username" type="text"/>
+    Ange lösenord: <input name="password" type="password"/>
+    <input type="submit" value="Submitta"/>
+</form>
+</body>
+</html>
