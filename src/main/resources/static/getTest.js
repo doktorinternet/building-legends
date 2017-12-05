@@ -8,34 +8,17 @@ request.send();
 
 request.onload = function () {
     var json = request.response;
-    var allItems = [];
-    var i = 0;
     for (items in json["data"]) {
-        console.log(items);
-        // allItems[i++] = items;
-        let myTd = document.createElement("td");
-
-        let obj = "<img src=\"http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + json["data"][items]["image"]["full"] + "\">" +
-            "<p>" + json["data"][items]["name"] + "</p> ";
-        myTd.innerHTML = obj;
-        document.getElementById("searchRow").appendChild(myTd);
+        let mySpan = document.createElement("span");
+        let myImg = document.createElement("img");
+        let myTitle = document.createElement("span");
+        myImg.src = "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + json["data"][items]["image"]["full"];
+        myTitle.innerText = json["data"][items]["name"];
+        mySpan.appendChild(myImg);
+        mySpan.appendChild(myTitle);
+        document.getElementById("searchRow").appendChild(mySpan);
     }
 
 
-
-
-    // json["data"].forEach(item => {
-    //     console.log(item);
-    //     document.getElementById("searchRow").appendChild("<td> " +
-    //                       "<img src=\"http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" +item["image"["full"] + "\">" +
-    //                       "<p>" + item["name"] + "</p> " +
-    //                   "</td>");
-    // });
-
-
-
-    console.log(json);
-
-    document.getElementById("items").innerText = json["data"]["1001"]["name"];
+    // document.getElementById("items").innerText = json["data"]["1001"]["name"];
 };
-
