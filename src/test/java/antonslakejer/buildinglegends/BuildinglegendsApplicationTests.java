@@ -11,6 +11,9 @@ public class BuildinglegendsApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
+
+
 	}
 
 }

@@ -1,7 +1,8 @@
-package Repository;
+package antonslakejer.buildinglegends.Repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,31 +10,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 @Component
 public class ScoreRepository {
-    private String currentUser;
+
+
     @Autowired
     private DataSource dataSource;
 
     public String addMember(String username, String password) {
         if (doUserNameExist(username)) {
             return "Användarnamn upptaget!";
-        }else if(isUsernameTooShort(username)){
+        } else if (isUsernameTooShort(username)) {
             return "Användarnamn måste vara minst 2 tecken";
-        }else if(isUsernameTooLong(username)){
+        } else if (isUsernameTooLong(username)) {
             return "Användarnamn får max vara 20 tecken";
-        }else if(isPasswordTooShort(password)){
+        } else if (isPasswordTooShort(password)) {
             return "Lösenord måste minst vara 6 tecken låååångt";
-        }else if(isPasswordTooLong(password)){
+        } else if (isPasswordTooLong(password)) {
             return "Lösenord får max vara 40 tecken långt";
         }
         if (dataSource != null) {
             try (Connection conn = dataSource.getConnection();
-                 PreparedStatement statement = conn.prepareStatement("INSERT INTO Legends (username,password) VALUES(?,?)")) {
+                 PreparedStatement statement = conn.prepareStatement
+                         ("INSERT INTO userLegends (username,password) VALUES(?,?)")) {
                 statement.setString(1, username);
                 statement.setString(2, password);
                 statement.executeUpdate();
-
             } catch (SQLException e) {
                 System.err.println("Super lethal error in addMember");
             }
@@ -45,15 +48,15 @@ public class ScoreRepository {
 
     public String validateLogin(String username, String password){
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement("SELECT * FROM Legends WHERE username = ? AND password = ? ")){
-
+             PreparedStatement statement = conn.prepareStatement
+                     ("SELECT username,password FROM userLegends WHERE username = ? AND password = ? ")){
             statement.setString(1,username);
             statement.setString(2,password);
             ResultSet rs = statement.executeQuery();
+
             if (!rs.next()) {
                 return "Användarnamn eller lösenord fel";
             } else {
-                currentUser = username;
                 return username;
             }
         }
@@ -66,7 +69,8 @@ public class ScoreRepository {
 
     private boolean doUserNameExist(String username) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement("SELECT username FROM Legends WHERE username = (?)")) {
+             PreparedStatement statement = conn.prepareStatement
+                     ("SELECT username FROM userLegends WHERE username = (?)")) {
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             if (!rs.next()) {
