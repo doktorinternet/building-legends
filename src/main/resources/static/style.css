@@ -1,0 +1,83 @@
+body {
+  background-image: url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg");
+  background-size: 100%;
+  background-repeat: false;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+}
+
+body * {
+  box-shadow: inset 5px 5px 5px orange;
+}
+
+header {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#container {
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  height: 95%;
+  position: fixed;
+  top: 5%;
+  left: 0%;
+}
+
+#container div {
+  position: relative;
+  float: left;
+}
+
+#left-container {
+  width: 30%;
+  height: 100%;
+}
+
+#left-container div {
+  position: relative;
+}
+
+#left-container #search-container {
+  width: 100%;
+  height: 10%;
+}
+
+#left-container #list-container {
+  width: 100%;
+  height: 90%;
+}
+
+#editor-container {
+  width: 70%;
+  height: 33%;
+}
+
+#result-container {
+  width: 70%;
+  height: 34%;
+}
+
+#result-container #stats-container {
+  position: relative;
+  width: 30%;
+  height: 100%;
+  float: right;
+}
+
+#information-container {
+  width: 70%;
+  height: 33%;
+}
+ 
+
+ /*# sourceMappingURL= style.css.map */
