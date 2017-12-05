@@ -3,7 +3,7 @@
     "id": 8400,
     "name": "Resolve",
     "tooltip": "Durability and crowd control",
-    "iconPath": "/lol-game-data/assets/v1/perk-images/Styles/7204_Resolve.png",
+    "iconPath": "./images/perk-images/Styles/7204_Resolve.png",
     "isAdvanced": false,
     "allowedSubStyles": [
       8000,
@@ -82,7 +82,7 @@
     "id": 8100,
     "name": "Domination",
     "tooltip": "Burst damage and target access ",
-    "iconPath": "/lol-game-data/assets/v1/perk-images/Styles/7200_Domination.png",
+    "iconPath": "./images/perk-images/Styles/7200_Domination.png",
     "isAdvanced": false,
     "allowedSubStyles": [
       8300,
@@ -161,7 +161,7 @@
     "id": 8000,
     "name": "Precision",
     "tooltip": "Improved attacks and sustained damage",
-    "iconPath": "/lol-game-data/assets/v1/perk-images/Styles/7201_Precision.png",
+    "iconPath": "./images/perk-images/Styles/7201_Precision.png",
     "isAdvanced": false,
     "allowedSubStyles": [
       8200,
@@ -240,7 +240,7 @@
     "id": 8200,
     "name": "Sorcery",
     "tooltip": "Empowered abilities and resource manipulation",
-    "iconPath": "/lol-game-data/assets/v1/perk-images/Styles/7202_Sorcery.png",
+    "iconPath": "./images/perk-images/Styles/7202_Sorcery.png",
     "isAdvanced": false,
     "allowedSubStyles": [
       8000,
@@ -319,7 +319,7 @@
     "id": 8300,
     "name": "Inspiration",
     "tooltip": "Creative tools and rule bending ",
-    "iconPath": "/lol-game-data/assets/v1/perk-images/Styles/7203_Whimsy.png",
+    "iconPath": "./images/perk-images/Styles/7203_Whimsy.png",
     "isAdvanced": true,
     "allowedSubStyles": [
       8100,
