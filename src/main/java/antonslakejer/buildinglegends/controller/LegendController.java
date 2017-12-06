@@ -19,7 +19,7 @@ public class LegendController {
     @Autowired
     private ScoreRepository scoreRepository;
 
-    @GetMapping("")
+    @GetMapping("/rune")
     @ResponseBody
     public List<Rune> sendRunesToJS() {
         return new ArrayList<>();
@@ -54,8 +54,10 @@ public class LegendController {
         } else return new ModelAndView("/login"); //.addObject("loginError", answer);
     }
 
-
-    
+    @GetMapping("/savedLegends")
+    public ModelAndView savedLegends(){
+        return new ModelAndView ("/savedLegends");
+    }
 }
 
 
