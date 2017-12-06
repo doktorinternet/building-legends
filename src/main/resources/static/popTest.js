@@ -1,5 +1,7 @@
 //popAllItems()
 //popAllChampions();
+var selectedItemSlot;
+var selectedChampion;
 
 function popAllItems() {
     var request = new XMLHttpRequest();
@@ -58,6 +60,7 @@ function popAllChampions() {
 }
 
 function selectChampion(champID){
+    selectedChampion = champID;
     var request = new XMLHttpRequest();
     var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion.json";
     request.open("GET", requestURL, true);
@@ -71,4 +74,8 @@ function selectChampion(champID){
         myImg.src = thumbSrc;
         document.getElementById("body").style.backgroundImage = backgroundImgSrc;
     }
+}
+function selectItemSlot(itemSlot){
+    popAllItems()
+    selectedItemSlot = itemslot;
 }
