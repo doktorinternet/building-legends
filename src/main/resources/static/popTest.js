@@ -1,5 +1,5 @@
 //popAllItems()
-popAllChampions();
+//popAllChampions();
 
 function popAllItems() {
     var request = new XMLHttpRequest();
@@ -8,6 +8,7 @@ function popAllItems() {
     request.responseType = "json";
     request.send();
     request.onload = function () {
+        document.getElementById("list-container").innerHTML = "";
         var json = request.response;
         for (items in json["data"]) {
             let myDiv = document.createElement("div");
@@ -34,6 +35,7 @@ function popAllChampions() {
     request.responseType = "json";
     request.send();
     request.onload = function () {
+        document.getElementById("list-container").innerHTML = "";
         var json = request.response;
         for (champion in json["data"]) {
             let myDiv = document.createElement("div");
@@ -56,6 +58,17 @@ function popAllChampions() {
 }
 
 function selectChampion(champID){
-    var imgsrc = "url(\"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champID + "_0.jpg\")";
-    document.getElementById("body").style.backgroundImage = imgsrc;
+    var request = new XMLHttpRequest();
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion.json";
+    request.open("GET", requestURL, true);
+    request.responseType = "json";
+    request.send();
+    request.onload = function () {
+        var json = request.response;
+        var backgroundImgSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champID + "_0.jpg\")";
+        var thumbSrc= "http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + json["data"][champID]["image"]["full"];
+        let myImg = document.getElementById("selected-champion-thumb");
+        myImg.src = thumbSrc;
+        document.getElementById("body").style.backgroundImage = backgroundImgSrc;
+    }
 }

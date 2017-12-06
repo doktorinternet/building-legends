@@ -162,6 +162,12 @@ header {
   border-radius: 15px;
 }
 
+#editor-container #selected-champion #selected-champion-thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
 #editor-container #selected-items {
   max-width: 332px;
   max-height: 222px;

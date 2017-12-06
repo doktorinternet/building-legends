@@ -10,7 +10,7 @@
     <span>Välkommen till LegendBuilder!</span>
 
     <form action="savedLegends" method="get">
-    <input type="submit" value="List with saved Legends"/>
+        <input type="submit" value="List with saved Legends"/>
     </form>
 
 </header>
@@ -21,8 +21,10 @@
     </div>
 
     <div id="editor-container">
-        <div id="selected-champion">Select a Champion!</div>
-        <div id="selected-items">
+        <div id="selected-champion" onclick="popAllChampions()">
+            <img id="selected-champion-thumb"src="./images/EmptyChampionSlot.png"></img>
+        </div>
+        <div id="selected-items" onclick="popAllItems()">
             <div id="item-slot-1" class="item-slot">slot 1</div>
             <div id="item-slot-2" class="item-slot">slot 2</div>
             <div id="item-slot-3" class="item-slot">slot 3</div>
