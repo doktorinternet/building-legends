@@ -22,15 +22,15 @@
 
     <div id="editor-container">
         <div id="selected-champion" onclick="popAllChampions()">
-            <img id="selected-champion-thumb"src="./images/EmptyChampionSlot.png"></img>
+            <!--<img id="selected-champion-thumb"src="./images/EmptyChampionSlot.png"></img>-->
         </div>
         <div id="selected-items">
-            <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(1)">slot 1</div>
-            <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(2)">slot 2</div>
-            <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(3)">slot 3</div>
-            <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(4)">slot 4</div>
-            <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(5)">slot 5</div>
-            <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(6)">slot 6</div>
+            <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
+            <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
+            <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
+            <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
+            <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
+            <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
         </div>
         <div id="rune-container">Runes</div>
     </div>
@@ -41,6 +41,7 @@
 
     <div id="information-container"></div>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="./popTest.js"></script>
 </body>
 </html>

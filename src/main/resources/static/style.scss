@@ -1,7 +1,7 @@
 body {
     background-image: url("http://i.imgur.com/voR8Lgi.jpg");
-    background-size: 100%;
-    background-repeat: false;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
     margin: 0px;
@@ -145,6 +145,8 @@ header {
         border: solid black 1px;
         text-align: center;
         border-radius: 15px;
+        background-image: url("./images/EmptyChampionSlot.png");
+        background-size: 100% 100%;
         #selected-champion-thumb{
             width: 100%;
             height: 100%;
@@ -156,10 +158,33 @@ header {
         max-height: 222px;
         width: 30%;
         height: 80%;
+        border: solid 2px black;
+        background-image: url("./images/SelectedGrid.png");
+        background-size: 100% 100%;
         .item-slot{
             width: 33.333%;
             height: 50%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
         }
+    }
+    #item-slot-1{
+        background-image: url("./images/SelectItem1.png");
+    }
+    #item-slot-2{
+        background-image: url("./images/SelectItem2.png");
+    }
+    #item-slot-3{
+        background-image: url("./images/SelectItem3.png");
+    }
+    #item-slot-4{
+        background-image: url("./images/SelectItem4.png");
+    }
+    #item-slot-5{
+        background-image: url("./images/SelectItem5.png");
+    }
+    #item-slot-6{
+        background-image: url("./images/SelectItem6.png");
     }
     #rune-container{
         width: 30%;
