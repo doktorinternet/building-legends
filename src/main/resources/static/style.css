@@ -5,10 +5,10 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0px;
-}
-
-body * {
-  box-shadow: inset 5px 5px 5px orange;
+  overflow: auto;
+  /*{
+       box-shadow: inset 0px 0px 50px orange;
+    }*/
 }
 
 header {
@@ -72,7 +72,6 @@ header {
   align-content: center;
   position: relative;
   height: 15%;
-  background-color: rgba(96, 96, 252, 0.459);
 }
 
 #left-container #list-container .name-container {
@@ -221,11 +220,62 @@ header {
   height: 34%;
 }
 
+#result-container #abilities-container {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#result-container #abilities-container div {
+  width: 15%;
+  height: 36%;
+  position: relative;
+  background-size: 100% 100%;
+  border: solid 2px black;
+  border-radius: 15px;
+}
+
+#result-container #abilities-container div img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
 #result-container #stats-container {
   position: relative;
   width: 30%;
   height: 100%;
   float: right;
+  margin-right: 10%;
+  overflow: auto;
+}
+
+#result-container #stats-container table {
+  margin: auto;
+  width: 80%;
+  height: 100%;
+}
+
+#result-container #stats-container table tr td {
+  height: 12%;
+}
+
+#result-container #stats-container table tr td img {
+  max-height: 38px;
+  max-width: 38px;
+  height: 100%;
+  width: auto;
+  float: left;
+}
+
+#result-container #stats-container table tr td span {
+  margin-left: 20px;
+  height: 100%;
+  font-size: 1.8em;
+  float: left;
 }
 
 #information-container {
