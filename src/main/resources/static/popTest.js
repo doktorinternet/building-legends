@@ -62,6 +62,7 @@ function popAllChampions() {
 }
 
 function selectChampion(champID){
+    selectedChampion = champID;
     var request = new XMLHttpRequest();
     var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion.json";
     request.open("GET", requestURL, true);
@@ -81,7 +82,7 @@ function selectItemSlot(slot, slotID){
     $(".item-slot").each(function(){
         this.style.boxShadow = "";
     })
-    slot.style.boxShadow = "inset 5px 5px 5px white";
+    slot.style.boxShadow = "inset 0px 0px 20px white";
 }
 function selectItem(itemID){
     selectedItemsArr[selectedItemSlotID-1] = itemID;
