@@ -187,27 +187,6 @@ function getOneChampion(event) {
     };
 }
 
-function getOneChampion(event) {
-    var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champions/+" + event + ".json";
-    request.open("GET", requestURL, true);
-    request.responseType = "json";
-    request.send();
-    request.onload = function () {
-        let champions = request.response;
-        for (let champion in champions["data"]) {
-            let mySpan = document.createElement("span");
-            let myImg = document.createElement("img");
-            let myTitle = document.createElement("span");
-            myImg.src = "http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + champions["data"][champion]["image"]["full"];
-            myTitle.innerText = champions["data"][champion]["name"];
-            mySpan.appendChild(myImg);
-            mySpan.appendChild(myTitle);
-            document.getElementById("searchRow").appendChild(mySpan);
-        }
-    };
-}
-
 function loadJSON(callback) {
     let runeData = "./json/perks.json"
 
