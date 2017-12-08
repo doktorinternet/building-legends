@@ -6,9 +6,9 @@ var selectedItemsArr = [];
 var allItems = {};
 var stats = {
     "FlatHPPoolMod": 0,
-    // "PercentHPRegen": 0,
+    "PercentHPRegen": 0,
     "FlatMPPoolMod": 0,
-    // "PercentMPRegen": 0,
+    "PercentMPRegen": 0,
     "rFlatArmorPenetrationMod": 0,
     // "PercentArmorPenetrationMod": 0,
     "rFlatMagicPenetrationMod": 0,
@@ -22,9 +22,11 @@ var stats = {
     "FlatArmorMod": 0,
     "FlatSpellBlockMod": 0,
     "PercentAttackSpeedMod": 0,
+    "BaseAttackSpeed": 0,
     "rPercentCooldownMod": 0,
     "attack-range": 0,
     "PercentMovementSpeedMod": 0,
+    "FlatMovementSpeedMod": 0,
 };
 // var stats = {};
 
@@ -77,11 +79,42 @@ function selectChampion(champID) {
         // }
         var backgroundImgSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champID + "_0.jpg\")";
         var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + json["data"][champID]["image"]["full"] + "\")";
-        var passivename = json["data"][champID]
+        var passivename = json["data"][champID];
         var passiveSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/passive/" + champID + "_P.png\")";
         document.getElementById("selected-champion").style.backgroundImage = thumbSrc;
         document.getElementById("body").style.backgroundImage = backgroundImgSrc;
         setAbilityImage(champID);
+        setupStats();
+    }
+}
+
+var curLevel = 18;
+function extractChampionStats(champID, callback) {
+    console.log("Extract Champion Start");
+    var request = new XMLHttpRequest();
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion/" + champID + ".json";
+    request.open("GET", requestURL, true);
+    request.responseType = "json";
+    request.send();
+    request.onload = function () {
+        var json = request.response;
+        let championStats = json["data"][champID]["stats"];
+        console.log(championStats);
+        stats["FlatHPPoolMod"] = championStats["hp"] + (championStats["hpperlevel"] * curLevel);
+        stats["FlatMPPoolMod"] = championStats["mp"] + (championStats["mpperlevel"] * curLevel);
+        stats["FlatMovementSpeedMod"] = championStats["movespeed"];
+        stats["FlatArmorMod"] = championStats["armor"] + (championStats["armorperlevel"] * curLevel);
+        stats["FlatSpellBlockMod"] = championStats["spellblock"] + (championStats["spellblockperlevel"] * curLevel);
+        stats["attack-range"] = championStats["attackrange"];
+        stats["PercentHPRegen"] = championStats["hpregen"] + (championStats["hpregenperlevel"] * curLevel);
+        stats["PercentMPRegen"] = championStats["mpregen"] + (championStats["mpregenperlevel"] * curLevel);
+        stats["FlatCritChanceMod"] = championStats["crit"] + (championStats["critperlevel"] * curLevel);
+        stats["FlatPhysicalDamageMod"] = championStats["attackdamage"] + (championStats["attackdamageperlevel"] * curLevel);
+        stats["BaseAttackSpeed"] = (0.625 / (1 + championStats["attackspeedoffset"])) + (championStats["attackspeedperlevel"] * curLevel);
+        console.log("Champion stats just set to: ");
+        console.log(stats);
+        console.log("Extract Champion End");
+        callback();
     }
 }
 
@@ -149,7 +182,7 @@ function selectItemSlot(slot, slotID) {
     slot.style.backgroundImage = "url(\"./images/SelectItem" + slotID + ".png\")";
     selectedItemSlotID = slotID;
     selectedItemsArr[selectedItemSlotID - 1] = undefined;
-    setupItemStats();
+    setupStats();
     $(".item-slot").each(function () {
         this.style.boxShadow = "";
     })
@@ -168,19 +201,8 @@ function selectItem(itemID) {
         var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/item/" + json["data"][itemID]["image"]["full"] + "\")";
         var selectedSlotString = "item-slot-" + selectedItemSlotID;
         document.getElementById(selectedSlotString).style.backgroundImage = thumbSrc;
-        setupItemStats();
+        setupStats();
     }
-}
-
-function setupItemStats() {
-    resetStats();
-    selectedItemsArr.forEach(item => {
-        if (item != undefined || item != null) {
-            extractItemStats(item);
-        }
-    })
-    updateStatsUI();
-
 }
 
 function extractItemStats(itemID) {
@@ -257,18 +279,39 @@ function parseDescription(item) {
 }
 
 function updateStatsUI() {
-
+    console.log("Update Start");
     for (let stat in stats) {
-        console.log(stats[stat]);
-        console.log(stat);
+        // console.log(stats[stat]);
+        // console.log(stat);
         if (document.getElementById(stat) != null) {
             document.getElementById(stat).innerText = stats[stat];
         }
     }
+    console.log("Update End");
 }
 
+
+function setupStats() {
+    console.log("Setup Start")
+    resetStats();
+    if (selectedChampion != null && selectChampion != undefined) {
+        extractChampionStats(selectedChampion, function () {
+            console.log(selectedChampion);
+            console.log(stats);
+            selectedItemsArr.forEach(item => {
+                if (item != undefined || item != null) {
+                    extractItemStats(item);
+                }
+            })
+            updateStatsUI();
+        });
+    }
+    console.log("Setup End");
+}
 function resetStats() {
+    console.log("Reset Start");
     for (let stat in stats) {
         stats[stat] = 0;
     }
+    console.log("Reset End");
 }
