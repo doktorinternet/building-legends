@@ -56,7 +56,6 @@ function getAllItems() {
     request.onload = function () {
         let items = request.response;
         stats = items["basic"]["stats"];
-        console.log(items);
         allItems = items["data"];
         for (let item in allItems) {
             let mySpan = document.createElement("span");
@@ -67,9 +66,8 @@ function getAllItems() {
             mySpan.appendChild(myImg);
             mySpan.appendChild(myTitle);
             document.getElementById("searchRow").appendChild(mySpan);
-            i++;
         }
-        extractStats("3078");
+        extractStats(prompt("Enter an item ID"));
     };
 }
 
@@ -78,18 +76,22 @@ function extractStats(itemID) {
     var item = {};
     if (allItems.hasOwnProperty(itemID)) {
         item = allItems[itemID];
-        console.log(item);
     }
 
-    item["tags"].forEach(tag => {
-        if (tag.indexOf("Regen") > -1) {
-            let desc = parseDescription(item);
-            for (let prop in desc) {
-                console.log(prop);
-                stats[prop] += desc[prop];
+
+    if (item["description"].indexOf("Regen") > -1 ||
+        item["description"].indexOf("Cooldown Reduction") > -1) {
+        let description = parseDescription(item);
+        for (let key in description) {
+            
+            stats[key] += description[key];
+            console.log("Extract " + stats[key] + " as " + key);
+            
+            if(stats["rPercentCooldownMod"] > 0.4){
+                stats["rPercentCooldownMod"] = 0.4;
             }
         }
-    });
+    }
 
     for (let key in item["stats"]) {
 
@@ -97,9 +99,9 @@ function extractStats(itemID) {
 
         if (stats.hasOwnProperty(key)) {
             stats[key] += item["stats"][key];
-            console.log("Extract " + stats[key] + " from " + item["stats"]);
+            console.log("Extract " + stats[key] + " as " + key);
+            
         }
-        console.log("Key was " + key);
 
     }
 }
@@ -110,23 +112,36 @@ function parseDescription(item) {
     let start = description.indexOf("<stats>");
     let end = description.indexOf("</stats>");
     let regens = description.substring(start, end);
-
     let stats = regens.match(/\d+/g);
     let tags = item["tags"];
     let hpregen = 0;
     let mpregen = 0;
+    let cdr = 0;
 
-    for (let i = 0; i < tags.length(); i++) {
-        if (tags[i].equals("HealthRegen")) {
-            hpregen = stats[i];
-        } else if (tags[i].equals("ManaRegen")) {
-            mpregen = stats[i];
+    // for (let i = 0; i < tags.length(); i++) {
+    //     if (tags[i].equals("HealthRegen")) {
+    //         hpregen = stats[i];
+    //     } else if (tags[i].equals("ManaRegen")) {
+    //         mpregen = stats[i];
+    //     }
+    // }
+    let cdrString = "% Cooldown Reduction";
+    let endIndex = description.indexOf(cdrString);
+    if (endIndex > -1) {
+
+        let value = "";
+        value = description.substring(endIndex - 2, endIndex);
+        
+        if (value.indexOf("+") > -1) {
+            value = value.charAt(1);
         }
+        cdr += (parseInt(value)) / 100;
     }
 
     return {
-        "PercentHPRegenMod": hpregen,
-        "PercentMPRegenMod": mpregen
+        // "PercentHPRegenMod": hpregen,
+        // "PercentMPRegenMod": mpregen,
+        "rPercentCooldownMod": cdr
     };
 }
 
