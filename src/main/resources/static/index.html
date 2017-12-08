@@ -19,59 +19,61 @@
         <div id="search-container"></div>
         <div id="list-container"></div>
     </div>
+    <div id="main-container">
 
-    <div id="editor-container">
-        <div id="selected-champion" onclick="popAllChampions()">
+        
+        <div id="editor-container">
+            <div id="selected-champion" onclick="popAllChampions()">
+            </div>
+            <div id="selected-items">
+                <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
+                <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
+                <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
+                <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
+                <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
+                <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
+            </div>
+            <!--<div id="rune-container">Runes</div>-->
         </div>
-        <div id="selected-items">
-            <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
-            <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
-            <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
-            <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
-            <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
-            <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
-        </div>
-        <!--<div id="rune-container">Runes</div>-->
-    </div>
-
-    <div id="result-container">
-        <div id="abilities-container">
-            <div id="ability-passive"></div>
-            <div id="ability-q"><img src="./images/Letters/abilityq.png"></div>
-            <div id="ability-w"><img src="./images/Letters/abilityw.png"></div>
-            <div id="ability-e"><img src="./images/Letters/abilitye.png"></div>
-            <div id="ability-r"><img src="./images/Letters/abilityr.png"></div>
-    </div>
-        <div id="stats-container">
-            <table id="stats-table">
-                <tr>
-                    <td><img src="./images/icons/hpreg.png"></img><span id="hp-reg">0</span></td>
-                    <td><img src="./images/icons/manareg.png"></img><span id="mana-reg">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/lethality.png"></img><span id="lethality">0</span></td>
-                    <td><img src="./images/icons/magicpen.png"></img><span id="magic-pen">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/lifesteal.png"></img><span id="lifesteal">0</span></td>
-                    <td><img src="./images/icons/spellvamp.png"></img><span id="spell-vamp">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/critchance.png"></img><span id="critical-chance">0</span></td>
-                    <td><img src="./images/icons/tenacity.png"></img><span id="tenacity">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/attackdamage.png"></img><span id="attack-damage">0</span></td>
-                    <td><img src="./images/icons/abilitypower.png"></img><span id="ability-power">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/armor.png"></img><span id="armor">0</span></td>
-                    <td><img src="./images/icons/magicresist.png"></img><span id="magic-resist">0</span></td> 
-                </tr>
-                <tr>
-                    <td><img src="./images/icons/attackspeed.png"></img><span id="attack-speed">0</span></td>
-                    <td><img src="./images/icons/cooldownreduction.png"></img><span id="cooldown-reduction">0</span></td> 
-                </tr>
+        
+        <div id="result-container">
+            <div id="abilities-container">
+                <div id="ability-passive"></div>
+                <div id="ability-q"><img src="./images/Letters/abilityq.png"></div>
+                <div id="ability-w"><img src="./images/Letters/abilityw.png"></div>
+                <div id="ability-e"><img src="./images/Letters/abilitye.png"></div>
+                <div id="ability-r"><img src="./images/Letters/abilityr.png"></div>
+            </div>
+            <div id="stats-container">
+                <table id="stats-table">
+                    <tr>
+                        <td><img src="./images/icons/hpreg.png"></img><span id="hp-reg">0</span></td>
+                        <td><img src="./images/icons/manareg.png"></img><span id="mana-reg">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/lethality.png"></img><span id="lethality">0</span></td>
+                        <td><img src="./images/icons/magicpen.png"></img><span id="magic-pen">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/lifesteal.png"></img><span id="lifesteal">0</span></td>
+                        <td><img src="./images/icons/spellvamp.png"></img><span id="spell-vamp">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/critchance.png"></img><span id="critical-chance">0</span></td>
+                        <td><img src="./images/icons/tenacity.png"></img><span id="tenacity">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/attackdamage.png"></img><span id="attack-damage">0</span></td>
+                        <td><img src="./images/icons/abilitypower.png"></img><span id="ability-power">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/armor.png"></img><span id="armor">0</span></td>
+                        <td><img src="./images/icons/magicresist.png"></img><span id="magic-resist">0</span></td> 
+                    </tr>
+                    <tr>
+                        <td><img src="./images/icons/attackspeed.png"></img><span id="attack-speed">0</span></td>
+                        <td><img src="./images/icons/cooldownreduction.png"></img><span id="cooldown-reduction">0</span></td> 
+                    </tr>
                 <tr>
                     <td><img src="./images/icons/attackrange.png"></img><span id="attack-range">0</span></td>
                     <td><img src="./images/icons/movementspeed.png"></img><span id="movement-speed">0</span></td> 
@@ -79,8 +81,18 @@
             </table>
         </div>
     </div>
-
-    <div id="information-container"></div>
+    
+    <div id="information-container">
+        <div id="ability-info"></div>
+        <div id="item-info"><ul id="unique-effects">
+            <li>huhsuh</li>
+            <li>huhsuh</li>
+            <li>huhsuh</li>
+            <li>huhsuh</li>
+            <li>huhsuh</li>
+        </ul></div>
+    </div>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="./popTest.js"></script>
