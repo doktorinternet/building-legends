@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Login</title>
-    <link rel="stylesheet" href="../static/style.css"  th:href="style.css"/>
+    <link rel="stylesheet" href="../static/style.css" th:href="style.css" />
 </head>
+
 <body>
 
+    <header>
+        <h1>New User</h1>
+        <div id="button-container-right">
+            <form action="newuser" method="get">
+                <input name="submit" type="submit" value="Create new user" />
+            </form>
+        </div>
 
-<span>Välkommen till LegendBuilder!</span>
+    </header>
+    <div id="container">
 
-   <form action="login" method="get">     
-    <input name="submit" type="submit" value="Login"/>
-</form> 
+        <div>
+            <p th:text="${loginError}"></p>
+        </div>
+        <form action="login" method="post">
+            Username:
+            <input name="username" type="text" /> Password:
+            <input name="password" type="password" />
+            <input type="submit" value="Login" />
 
-<form action="newuser" method="get">     
-    <input name="submit" type="submit" value="Create new user"/>
-</form>
-
-<h5>Login</h5>
-<div>
-    <p th:text="${loginError}"></p>
-</div>
-<form action="login" method="post">
-    Username: <input name="username" type="text"/>
-    Password: <input name="password" type="password"/>
-    <input type="submit" value="Login"/>
-
-</form>
+        </form>
+    </div>
 </body>
+
 </html>

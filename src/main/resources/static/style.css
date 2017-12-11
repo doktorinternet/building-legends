@@ -49,7 +49,8 @@ header {
   height: 9px;
 }
 
-#left-container ::-webkit-scrollbar-button:start:decrement, #left-container #doc ::-webkit-scrollbar-button:end:increment {
+#left-container ::-webkit-scrollbar-button:start:decrement,
+#left-container #doc ::-webkit-scrollbar-button:end:increment {
   display: block;
   height: 0;
   background-color: transparent;
@@ -336,6 +337,15 @@ header {
 #information-container > div ul li {
   margin: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+#button-container-right {
+  height: 100%;
+  width: 40%;
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* The Modal (background) */

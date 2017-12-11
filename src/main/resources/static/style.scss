@@ -41,11 +41,33 @@ header {
 #left-container {
     width: 30%;
     height: 100%;
-    ::-webkit-scrollbar{width:9px;height:9px;}
-    ::-webkit-scrollbar-button:start:decrement,#doc ::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent;}
-    ::-webkit-scrollbar-track-piece{background-color:#001E19;-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px;}
-    ::-webkit-scrollbar-thumb:vertical{height:50px;background-color:rgba(228, 176, 86, 0.8);-webkit-border-radius:8px;box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2)}
-    ::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:rgba(228, 176, 86, 0.8);-webkit-border-radius:8px;}
+     ::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+    }
+     ::-webkit-scrollbar-button:start:decrement,
+    #doc ::-webkit-scrollbar-button:end:increment {
+        display: block;
+        height: 0;
+        background-color: transparent;
+    }
+     ::-webkit-scrollbar-track-piece {
+        background-color: #001E19;
+        -webkit-border-radius: 0;
+        -webkit-border-bottom-right-radius: 8px;
+        -webkit-border-bottom-left-radius: 8px;
+    }
+     ::-webkit-scrollbar-thumb:vertical {
+        height: 50px;
+        background-color: rgba(228, 176, 86, 0.8);
+        -webkit-border-radius: 8px;
+        box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2)
+    }
+     ::-webkit-scrollbar-thumb:horizontal {
+        width: 50px;
+        background-color: rgba(228, 176, 86, 0.8);
+        -webkit-border-radius: 8px;
+    }
     div {
         position: relative;
     }
@@ -105,8 +127,7 @@ header {
         justify-content: flex-start;
         align-content: center;
         position: relative;
-        height: 15%;
-        //background-color: rgba(96, 96, 252, 0.459);
+        height: 15%; //background-color: rgba(96, 96, 252, 0.459);
     }
     .name-container {
         width: 100%;
@@ -132,14 +153,15 @@ header {
         font-size: 1em;
     }
 }
-#main-container{
+
+#main-container {
     width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-     > div{
+    >div {
         width: 90%;
         height: 30%;
         background-color: rgba(255, 255, 255, 0.4);
@@ -147,16 +169,17 @@ header {
         box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.4);
     }
 }
+
 #editor-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-content: center;
-    div{
+    div {
         background-color: rgba(245, 222, 179, 0.3);
         margin: auto;
     }
-    #selected-champion{
+    #selected-champion {
         max-width: 128px;
         max-height: 128px;
         width: 10%;
@@ -166,13 +189,13 @@ header {
         border-radius: 15px;
         background-image: url("./images/EmptyChampionSlot.png");
         background-size: 100% 100%;
-        #selected-champion-thumb{
+        #selected-champion-thumb {
             width: 100%;
             height: 100%;
             border-radius: 15px;
         }
     }
-    #selected-items{
+    #selected-items {
         max-width: 332px;
         max-height: 222px;
         width: 30%;
@@ -180,55 +203,55 @@ header {
         border: solid 2px black;
         background-image: url("./images/SelectedGrid.png");
         background-size: 100% 100%;
-        .item-slot{
+        .item-slot {
             width: 33.333%;
             height: 50%;
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
     }
-    #item-slot-1{
+    #item-slot-1 {
         background-image: url("./images/SelectItem1.png");
     }
-    #item-slot-2{
+    #item-slot-2 {
         background-image: url("./images/SelectItem2.png");
     }
-    #item-slot-3{
+    #item-slot-3 {
         background-image: url("./images/SelectItem3.png");
     }
-    #item-slot-4{
+    #item-slot-4 {
         background-image: url("./images/SelectItem4.png");
     }
-    #item-slot-5{
+    #item-slot-5 {
         background-image: url("./images/SelectItem5.png");
     }
-    #item-slot-6{
+    #item-slot-6 {
         background-image: url("./images/SelectItem6.png");
     }
-    #rune-container{
+    #rune-container {
         width: 30%;
         height: 80%;
     }
 }
 
 #result-container {
-    #abilities-container{
-        width:60%;
+    #abilities-container {
+        width: 60%;
         height: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        div{
+        div {
             width: 15%;
             height: 36%;
             position: relative;
             background-size: 100% 100%;
             border: solid 2px black;
             border-radius: 15px;
-            img{
+            img {
                 width: 100%;
-                height:100%;
+                height: 100%;
                 opacity: 0.8;
             }
         }
@@ -240,21 +263,21 @@ header {
         float: right;
         margin-right: 10%;
         overflow: auto;
-        table{
+        table {
             margin: auto;
             width: 80%;
             height: 100%;
-            tr{
-                td{
+            tr {
+                td {
                     height: 12%;
-                    img{
+                    img {
                         max-height: 38px;
                         max-width: 38px;
                         height: 100%;
-                        width:auto;
+                        width: auto;
                         float: left;
                     }
-                    span{
+                    span {
                         margin-left: 20px;
                         height: 100%;
                         font-size: 1.6em;
@@ -267,22 +290,30 @@ header {
 }
 
 #information-container {
- > div{
-     width:50%;
-     height: 100%;
-     background-color: papayawhip;
-     overflow: hidden;
-     ul{
-        list-style-type: none;
+    >div {
+        width: 50%;
+        height: 100%;
+        background-color: papayawhip;
         overflow: hidden;
-        li{
-            margin: 10px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+        ul {
+            list-style-type: none;
+            overflow: hidden;
+            li {
+                margin: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+            }
         }
-     }
- }
+    }
 }
 
+#button-container-right {
+    height: 100%;
+    width: 40%;
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 /* The Modal (background) */
 .modal {
@@ -298,7 +329,6 @@ header {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
 }
-
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
@@ -306,7 +336,6 @@ header {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
-
 /* The Close Button */
 .close {
     /* Position it in the top right corner outside of the modal */
@@ -317,25 +346,21 @@ header {
     font-size: 35px;
     font-weight: bold;
 }
-
 /* Close button on hover */
 .close:hover,
 .close:focus {
     color: red;
     cursor: pointer;
 }
-
 /* Add Zoom Animation */
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
-
 @-webkit-keyframes animatezoom {
     from {-webkit-transform: scale(0)}
     to {-webkit-transform: scale(1)}
 }
-
 @keyframes animatezoom {
     from {transform: scale(0)}
     to {transform: scale(1)}

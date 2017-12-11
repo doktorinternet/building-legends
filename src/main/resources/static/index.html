@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>LegendBuilder</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body id="body">
-<header>
-    <span>Välkommen till LegendBuilder!</span>
+    <header>
+        <span>Välkommen till LegendBuilder!</span>
+        <div id="button-container-right">
+            <form action="login" method="get">
+                <input name="submit" type="submit" value="Login" />
+            </form>
 
-       <form action="login" method="get">     
-       <input name="submit" type="submit" value="Login"/>
-        </form> 
+            <form action="newuser" method="get">
+                <input name="submit" type="submit" value="Create new user" />
+            </form>
+        </div>
 
-        <form action="newuser" method="get">     
-       <input name="submit" type="submit" value="Create new user"/>
-        </form>
+    </header>
 
-</header>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="./popTest.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="./popTest.js"></script>
 </body>
+
 </html>
