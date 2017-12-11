@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LegendBuilder</title>
+    <link rel="stylesheet" href="../static/style.css"/>
+</head>
+<body id="body">
+<header>
+    <span>Välkommen till LegendBuilder!</span>
+
+    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+    <!-- The Modal -->
+    <div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/login" method="post">
+            <div class="imgcontainer">
+                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input type="username" placeholder="Enter Username" name="username" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit">Login</button>
+                <input type="checkbox" checked="checked"> Remember me
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                    Cancel
+                </button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <button onclick="document.getElementById('id01').style.display='block'">Create user</button>
+
+    <!-- The Modal -->
+    <div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/newuser" method="post">
+            <div class="imgcontainer">
+                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input type="username" placeholder="Enter Username" name="username" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <label><b>e-mail</b></label>
+                <input type="e-mail" placeholder="Enter e-mail" name="email" required>
+
+                <button type="submit">Create user</button>
+
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <!--<form action="savedLegends" method="get">-->
+    <!--<input type="submit" value="login"/>-->
+    <!--<form action="newuser" method="get">-->
+    <!--<input type="submit" value="newuserpage"-->
+    <!--</form>-->
+    <!--</form>-->
+    <!--<form action="newuser" method="post">-->
+    <!--Username: <input name="username" type="text"/>-->
+    <!--Password: <input name="password" type="password"/>-->
+    <!--<button type="submit" value="Create user"/>-->
+    <!--</form>-->
+
+</header>
+
+
+<div id="container">
+    <div id="left-container">
+        <div id="search-container"></div>
+        <div id="list-container"></div>
+    </div>
+    <div id="main-container">
+
+
+        <div id="editor-container">
+            <div id="selected-champion" onclick="popAllChampions()">
+            </div>
+            <div id="selected-items">
+                <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
+                <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
+                <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
+                <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
+                <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
+                <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
+            </div>
+            <!--<div id="rune-container">Runes</div>-->
+        </div>
+
+        <div id="result-container">
+            <div id="abilities-container">
+                <div id="ability-passive"></div>
+                <div id="ability-q"><img src="../static/images/Letters/abilityq.png"></div>
+                <div id="ability-w"><img src="../static/images/Letters/abilityw.png"></div>
+                <div id="ability-e"><img src="../static/images/Letters/abilitye.png"></div>
+                <div id="ability-r"><img src="../static/images/Letters/abilityr.png"></div>
+            </div>
+            <div id="stats-container">
+                <table id="stats-table">
+                    <tr>
+                        <td><img src="../static/images/icons/hpreg.png"></img><span id="FlatHPPoolMod">0</span></td>
+                        <td><img src="../static/images/icons/manareg.png"></img><span id="FlatMPPoolMod">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/lethality.png"></img><span
+                                id="rFlatArmorPenetrationMod">0 | 0%</span></td>
+                        <td><img src="../static/images/icons/magicpen.png"></img><span
+                                id="rFlatMagicPenetrationMod">0 | 0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/lifesteal.png"></img><span id="PercentLifeStealMod">0</span></td>
+                        <td><img src="../static/images/icons/spellvamp.png"></img><span id="PercentSpellVampMod">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/critchance.png"></img><span id="FlatCritChanceMod">0</span></td>
+                        <td><img src="../static/images/icons/tenacity.png"></img><span id="PercentMovementImpedementResistance">0</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/attackdamage.png"></img><span id="FlatPhysicalDamageMod">0</span>
+                        </td>
+                        <td><img src="../static/images/icons/abilitypower.png"></img><span id="FlatMagicDamageMod">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/armor.png"></img><span id="FlatArmorMod">0</span></td>
+                        <td><img src="../static/images/icons/magicresist.png"></img><span id="FlatSpellBlockMod">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/attackspeed.png"></img><span id="BaseAttackSpeed">0</span></td>
+                        <td><img src="../static/images/icons/cooldownreduction.png"></img><span
+                                id="rPercentCooldownMod">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../static/images/icons/attackrange.png"></img><span id="attack-range">0</span></td>
+                        <td><img src="../static/images/icons/movementspeed.png"></img><span id="FlatMovementSpeedMod">0</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="information-container">
+            <div id="ability-info"></div>
+            <div id="item-info">
+                <ul id="unique-effects">
+                    <li>huhsuh</li>
+                    <li>huhsuh</li>
+                    <li>huhsuh</li>
+                    <li>huhsuh</li>
+                    <li>huhsuh</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="../static/popTest.js"></script>
+</body>
+</html>

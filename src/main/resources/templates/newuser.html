@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Login</title>
-    <link href="Stylesheet.css" rel="stylesheet" type="text/css"></link>
-    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet"></link>
-    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet"></link>
+    <link rel="stylesheet" href="../static/style.css"  th:href="style.css"/>
 </head>
 <body>
-<a href="/index.html" id="header"><h1>Sten Sax Påse</h1></a>
-<h5>REGISTRERA</h5>
+
+<span>Välkommen till LegendBuilder!</span>
+
+   <form action="login" method="get">     
+    <input name="submit" type="submit" value="Login"/>
+</form> 
+
+<form action="newuser" method="get">     
+    <input name="submit" type="submit" value="Create new user"/>
+</form>
+
+<h5>New user</h5>
 <div>
     <p th:text="${registrationError}"></p>
 </div>
 <form action="newuser" method="post">
-    Ange användarnamn: <input name="username" type="text"/>
-    Ange lösenord: <input name="password" type="password"/>
-    <input type="submit" value="Submitta"/>
+    Select username: <input name="username" type="text"/>
+    Select password: <input name="password" type="password"/>
+    E-mail: <input name="email" type="email"/>
+    <input type="submit" value="Create new user"/>
 </form>
 </body>
 </html>

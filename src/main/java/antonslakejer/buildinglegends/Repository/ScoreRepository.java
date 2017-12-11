@@ -18,7 +18,7 @@ public class ScoreRepository {
     @Autowired
     private DataSource dataSource;
 
-    public String addMember(String username, String password) {
+    public String addMember(String username, String password,String email) {
         if (doUserNameExist(username)) {
             return "Användarnamn upptaget!";
         } else if (isUsernameTooShort(username)) {
@@ -33,9 +33,10 @@ public class ScoreRepository {
         if (dataSource != null) {
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement statement = conn.prepareStatement
-                         ("INSERT INTO userLegends (username,password) VALUES(?,?)")) {
+                         ("INSERT INTO userLegends (username,password,email) VALUES(?,?,?)")) {
                 statement.setString(1, username);
                 statement.setString(2, password);
+                statement.setString(3, email);
                 statement.executeUpdate();
             } catch (SQLException e) {
                 System.err.println("Super lethal error in addMember");
