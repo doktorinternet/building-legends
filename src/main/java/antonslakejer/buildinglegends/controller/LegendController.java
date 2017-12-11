@@ -32,8 +32,8 @@ public class LegendController {
     }
 
     @GetMapping("/newuser")
-    public String newUser() {
-        return "newuser";
+    public ModelAndView newUser() {
+        return new ModelAndView("/newuser");
     }
 
     @PostMapping("/newuser")
@@ -50,7 +50,7 @@ public class LegendController {
     public ModelAndView login(@RequestParam String username, @RequestParam String password) {
         String answer = scoreRepository.validateLogin(username, password);
         if (answer.equals(username)) {
-            return new ModelAndView("/dyn");  //.addObject("username", username);
+            return new ModelAndView("/savedLegends");  //.addObject("username", username);
         } else return new ModelAndView("/login"); //.addObject("loginError", answer);
     }
 
