@@ -312,13 +312,13 @@ function selectItem(itemID) {
 }
 
 function extractItemStats(itemID) {
-    console.log("ExtractItemStats from " + itemID);
+    // console.log("ExtractItemStats from " + itemID);
     var item = {};
     if (allItems.hasOwnProperty(itemID)) {
         item = allItems[itemID];
     }
 
-   
+
 
     if (descriptionHasData(item)) {
         let description = parseDescription(item);
@@ -334,7 +334,7 @@ function extractItemStats(itemID) {
             itemStats[key] += item["stats"][key];
         }
     }
-    
+
     if (itemStats["item-info"] === "") {
         itemStats["item-info"] = clearTags(item["description"]).concat("///");
     } else {
@@ -405,12 +405,14 @@ function clearTags(description) {
         "</groupLimit>",
         "<unique>",
         "</unique>",
+        "<hr>",
+        "<br><br>",
     ]
 
     if (description.indexOf("<stats>") > -1) {
         let removeThis = description.substring(
-                         description.indexOf(badTags[0]),
-                         description.indexOf(badTags[1]));
+            description.indexOf(badTags[0]),
+            description.indexOf(badTags[1]));
         description = description.replace(removeThis, "");
     }
 
@@ -423,7 +425,7 @@ function clearTags(description) {
 }
 
 function extractDefensePenetration(description) {
-    console.log(description);
+    // console.log(description);
     let searchKeys = {
         lethalityKey: " <a href='Lethality'",
         flatMagicKey: " <a href='FlatMagicPen'>",
@@ -521,12 +523,13 @@ function updateStatsUI() {
             let uniqueEffects = presentableStats[stat];
             console.log("UniqueEffects: " + uniqueEffects);
             let uniqueStrings = uniqueEffects.split("///");
-
-            if (presentableStats[stat].length > 0) {
-                for (let i = 0; i < uniqueStrings.length; i++) {
+            console.log("UniqueStrings: " + uniqueStrings);
+            for (let i = 0; i < uniqueStrings.length; i++) {
+                if (uniqueStrings[i] != "") {
                     let item = document.createElement("li");
                     item.innerHTML = uniqueStrings[i];
                     itemList.appendChild(item);
+                    itemList.appendChild(document.createElement("hr"));
                 }
             }
 
@@ -590,9 +593,9 @@ function prepareStats() {
     presentableStats["movement-speed"] = Math.round((itemStats["FlatMovementSpeedMod"] +
         championStats["FlatMovementSpeedMod"]) * (1 + itemStats["PercentMovementSpeedMod"]));
     presentableStats["item-info"] = itemStats["item-info"];
-    console.log("Item info: " + itemStats["item-info"]);
-    console.log("Presentable Stats: ");
-    console.log(presentableStats);
+    // console.log("Item info: " + itemStats["item-info"]);
+    // console.log("Presentable Stats: ");
+    // console.log(presentableStats);
 }
 
 function isMultiplier(stat) {
@@ -660,8 +663,8 @@ function resetStats() {
 //     document.getElementById("searchRow").appendChild(mySpan);
 // }
 
-function showAbilityInfoListener(e) {
+// function showAbilityInfoListener(e) {
 
 
-    e.id
-}
+//     e.id
+// }
