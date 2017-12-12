@@ -21,10 +21,10 @@ header {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: rgba(61, 43, 221, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-#container {
+.container {
   background-color: rgba(255, 255, 255, 0.3);
   width: 100%;
   height: 95%;
@@ -34,45 +34,48 @@ header {
   overflow: auto;
 }
 
-#container div {
+.container div {
   position: relative;
   float: left;
+}
+
+#index-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#index-container form {
+  height: 80%;
+  width: 30%;
+}
+
+#index-container form input {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  font-size: 400%;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#index-container form input:hover {
+  box-shadow: inset 10px 10px 10px rgba(0, 0, 0, 0.4);
+  font-size: 300%;
+}
+
+#index-container form:first-of-type input {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+}
+
+#index-container form:first-of-type input:hover {
+  box-shadow: inset 10px 10px 10px rgba(0, 0, 0, 0.4);
+  font-size: 300%;
 }
 
 #left-container {
   width: 30%;
   height: 100%;
-}
-
-#left-container ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
-}
-
-#left-container ::-webkit-scrollbar-button:start:decrement, #left-container #doc ::-webkit-scrollbar-button:end:increment {
-  display: block;
-  height: 0;
-  background-color: transparent;
-}
-
-#left-container ::-webkit-scrollbar-track-piece {
-  background-color: #001E19;
-  -webkit-border-radius: 0;
-  -webkit-border-bottom-right-radius: 8px;
-  -webkit-border-bottom-left-radius: 8px;
-}
-
-#left-container ::-webkit-scrollbar-thumb:vertical {
-  height: 50px;
-  background-color: rgba(228, 176, 86, 0.8);
-  -webkit-border-radius: 8px;
-  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2);
-}
-
-#left-container ::-webkit-scrollbar-thumb:horizontal {
-  width: 50px;
-  background-color: rgba(228, 176, 86, 0.8);
-  -webkit-border-radius: 8px;
 }
 
 #left-container div {
@@ -93,7 +96,7 @@ header {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgba(245, 222, 179, 0.452);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 #left-container #list-container .item-container {
@@ -182,7 +185,7 @@ header {
 #main-container > div {
   width: 90%;
   height: 30%;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 15px;
   box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.4);
 }
@@ -195,15 +198,25 @@ header {
 }
 
 #editor-container div {
-  background-color: rgba(245, 222, 179, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   margin: auto;
 }
 
-#editor-container #selected-champion {
+#editor-container #editor-left {
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2%;
+  height: 80%;
+  width: 30%;
+}
+
+#editor-container #editor-left #selected-champion {
   max-width: 128px;
   max-height: 128px;
-  width: 10%;
-  height: 40%;
+  width: 30%;
+  height: 50%;
   border: solid black 1px;
   text-align: center;
   border-radius: 15px;
@@ -211,10 +224,39 @@ header {
   background-size: 100% 100%;
 }
 
-#editor-container #selected-champion #selected-champion-thumb {
+#editor-container #editor-left #selected-champion #selected-champion-thumb {
   width: 100%;
   height: 100%;
   border-radius: 15px;
+}
+
+#editor-container #editor-left #bars {
+  height: 20%;
+  width: 90%;
+}
+
+#editor-container #editor-left #bars > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#editor-container #editor-left #bars > div p {
+  color: white;
+}
+
+#editor-container #editor-left #bars #health-bar {
+  background-color: green;
+  width: 100%;
+  height: 49%;
+  border: 1px solid black;
+}
+
+#editor-container #editor-left #bars #mana-bar {
+  background-color: blue;
+  width: 100%;
+  height: 49%;
+  border: 1px solid black;
 }
 
 #editor-container #selected-items {
@@ -307,8 +349,8 @@ header {
 }
 
 #result-container #stats-container table tr td img {
-  max-height: 38px;
-  max-width: 38px;
+  max-height: 32px;
+  max-width: 32px;
   height: 100%;
   width: auto;
   float: left;
@@ -317,14 +359,13 @@ header {
 #result-container #stats-container table tr td span {
   margin-left: 20px;
   height: 100%;
-  font-size: 1.6em;
+  font-size: 1.2em;
   float: left;
 }
 
 #information-container > div {
   width: 50%;
   height: 100%;
-  background-color: papayawhip;
   overflow: hidden;
 }
 
@@ -336,6 +377,47 @@ header {
 #information-container > div ul li {
   margin: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+#button-container-right {
+  height: 100%;
+  width: 40%;
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+#doc ::-webkit-scrollbar-button:end:increment {
+  display: block;
+  height: 0;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #001E19;
+  -webkit-border-radius: 0;
+  -webkit-border-bottom-right-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 50px;
+  background-color: rgba(228, 176, 86, 0.8);
+  -webkit-border-radius: 8px;
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 50px;
+  background-color: rgba(228, 176, 86, 0.8);
+  -webkit-border-radius: 8px;
 }
  
 
