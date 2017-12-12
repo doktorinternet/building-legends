@@ -24,6 +24,12 @@ header {
     justify-content: center;
     align-items: center;
     background-color: $shade;
+    span{
+        color: white;
+    }
+    p{
+        color: white;
+    }
 }
 
 .container {
@@ -80,7 +86,7 @@ header {
     #search-container {
         width: 100%;
         height: 10%;
-        background-color: rgba(61, 43, 221, 0.3);
+        background-color: $fog;
     }
     #list-container {
         width: 100%;
@@ -332,10 +338,10 @@ header {
     >div {
         width: 50%;
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
         ul {
             list-style-type: none;
-            overflow: hidden;
+            //overflow: hidden;
             li {
                 margin: 10px;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.6);
