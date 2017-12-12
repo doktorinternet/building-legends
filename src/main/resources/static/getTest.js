@@ -318,11 +318,7 @@ function extractItemStats(itemID) {
         item = allItems[itemID];
     }
 
-    if (itemStats["item-info"] === "") {
-        itemStats["item-info"] = clearTags(item["description"]).concat("///");
-    } else {
-        itemStats["item-info"] += clearTags(item["description"]).concat("///");
-    }
+   
 
     if (descriptionHasData(item)) {
         let description = parseDescription(item);
@@ -337,6 +333,12 @@ function extractItemStats(itemID) {
         if (itemStats.hasOwnProperty(key)) {
             itemStats[key] += item["stats"][key];
         }
+    }
+    
+    if (itemStats["item-info"] === "") {
+        itemStats["item-info"] = clearTags(item["description"]).concat("///");
+    } else {
+        itemStats["item-info"] += clearTags(item["description"]).concat("///");
     }
 }
 
