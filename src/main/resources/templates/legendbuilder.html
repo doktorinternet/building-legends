@@ -1,110 +1,169 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>LegendBuilder</title>
-    <link rel="stylesheet" href="../static/style.css"  th:href="style.css"/>
+    <link rel="stylesheet" href="../static/style.css" th:href="style.css" />
 </head>
+
 <body id="body">
-<header>
-    <span>Välkommen till LegendBuilder!</span>
-   <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
-</header>
+    <header>
+        <span>Välkommen till LegendBuilder!</span>
+        <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
+    </header>
 
-<div class="container">
-    <div id="left-container">
-        <div id="search-container"></div>
-        <div id="list-container"></div>
-    </div>
-    <div id="main-container">
+    <div class="container">
+        <div id="left-container">
+            <div id="search-container"></div>
+            <div id="list-container"></div>
+        </div>
+        <div id="main-container">
 
 
-        <div id="editor-container">
-            <div id="editor-left">
-                <div id="selected-champion" onclick="popAllChampions()"></div>
-                <div id="bars">
-                    <div id="health-bar"><p>Health: &nbsp</p><p id="health-pool">0000</p></div>
-                    <div id="mana-bar"><p>Mana: &nbsp</p><p id="mana-pool">0000</p></div>
+            <div id="editor-container">
+                <div id="editor-left">
+                    <div id="selected-champion" onclick="popAllChampions()"></div>
+                    <div id="bars">
+                        <div id="health-bar">
+                            <p>Health: &nbsp</p>
+                            <p id="health-pool">0000</p>
+                        </div>
+                        <div id="mana-bar">
+                            <p>Mana: &nbsp</p>
+                            <p id="mana-pool">0000</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="selected-items">
+                    <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
+                    <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
+                    <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
+                    <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
+                    <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
+                    <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
+                </div>
+                <!--<div id="rune-container">Runes</div>-->
+            </div>
+
+            <div id="result-container">
+                <div id="abilities-container">
+                    <div id="ability-passive"></div>
+                    <div id="ability-q">
+                        <img src="../static/images/Letters/abilityq.png" th:src="@{/images/Letters/abilityq.png}"></img>
+                    </div>
+                    <div id="ability-w">
+                        <img src="../static/images/Letters/abilityw.png" th:src="@{/images/Letters/abilityw.png}"></img>
+                    </div>
+                    <div id="ability-e">
+                        <img src="../static/images/Letters/abilitye.png" th:src="@{/images/Letters/abilitye.png}"></img>
+                    </div>
+                    <div id="ability-r">
+                        <img src="../static/images/Letters/abilityr.png" th:src="@{/images/Letters/abilityr.png}"></img>
+                    </div>
+                </div>
+                <div id="stats-container">
+                    <table id="stats-table">
+                        <tr>
+                            <td>
+                                <img title="Health Regeneration" src="../static/images/icons/hpreg.png" th:src="@{/images/icons/hpreg.png}"></img>
+                                <span id="health-regen">0</span>
+                            </td>
+                            <td>
+                                <img title="Mana Regeneration" src="../static/images/icons/manareg.png" th:src="@{/images/icons/manareg.png}"></img>
+                                <span id="mana-regen">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Lethality | Armor Penetration" src="../static/images/icons/lethality.png" th:src="@{/images/icons/lethality.png}"></img>
+                                <span id="armor-penetration">0 | 0%</span>
+                            </td>
+                            <td>
+                                <img title="Magic Penetration" src="../static/images/icons/magicpen.png" th:src="@{/images/icons/magicpen.png}"></img>
+                                <span id="magic-penetration">0 | 0%</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Life Steal" src="../static/images/icons/lifesteal.png" th:src="@{/images/icons/lifesteal.png}"></img>
+                                <span id="life-steal">0</span>
+                            </td>
+                            <td>
+                                <img title="Spell Vamp" src="../static/images/icons/spellvamp.png" th:src="@{/images/icons/spellvamp.png}"></img>
+                                <span id="spell-vamp">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Critical Hit Chance" src="../static/images/icons/critchance.png" th:src="@{/images/icons/critchance.png}"></img>
+                                <span id="crit-change">0</span>
+                            </td>
+                            <td>
+                                <img title="Tenacity" src="../static/images/icons/tenacity.png" th:src="@{/images/icons/tenacity.png}"></img>
+                                <span id="tenacity">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Attack Damage" src="../static/images/icons/attackdamage.png" th:src="@{/images/icons/attackdamage.png}"></img>
+                                <span id="attack-damage">0</span>
+                            </td>
+                            <td>
+                                <img title=" Ability Power" src="../static/images/icons/abilitypower.png" th:src="@{/images/icons/abilitypower.png}"></img>
+                                <span id="ability-power">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Armor" src="../static/images/icons/armor.png" th:src="@{/images/icons/armor.png}"></img>
+                                <span id="armor">0</span>
+                            </td>
+                            <td>
+                                <img title="Magic Resistance" src="../static/images/icons/magicresist.png" th:src="@{/images/icons/magicresist.png}"></img>
+                                <span id="magic-resist">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Attack Speed" src="../static/images/icons/attackspeed.png" th:src="@{/images/icons/attackspeed.png}"></img>
+                                <span id="attack-speed">0</span>
+                            </td>
+                            <td>
+                                <img title="Cooldown Reduction" src="../static/images/icons/cooldownreduction.png" th:src="@{/images/icons/cooldownreduction.png}"></img>
+                                <span id="cooldown-reduction">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img title="Attack Range" src="../static/images/icons/attackrange.png" th:src="@{/images/icons/attackrange.png}"></img>
+                                <span id="attack-range">0</span>
+                            </td>
+                            <td>
+                                <img title="Movement Speed" src="../static/images/icons/movementspeed.png" th:src="@{/images/icons/movementspeed.png}"></img>
+                                <span id="movement-speed">0</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div id="selected-items">
-                <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
-                <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
-                <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
-                <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
-                <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
-                <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
-            </div>
-            <!--<div id="rune-container">Runes</div>-->
-        </div>
 
-        <div id="result-container">
-            <div id="abilities-container">
-                <div id="ability-passive"></div>
-                <div id="ability-q"><img src="../static/images/Letters/abilityq.png" th:src="@{/images/Letters/abilityq.png}"></img></div>
-                <div id="ability-w"><img src="../static/images/Letters/abilityw.png" th:src="@{/images/Letters/abilityw.png}"></img></div>
-                <div id="ability-e"><img src="../static/images/Letters/abilitye.png" th:src="@{/images/Letters/abilitye.png}"></img></div>
-                <div id="ability-r"><img src="../static/images/Letters/abilityr.png" th:src="@{/images/Letters/abilityr.png}"></img></div>
-            </div>
-            <div id="stats-container">
-                <table id="stats-table">
-                    <tr>
-                        <td><img title="Health Regeneration" src="../static/images/icons/hpreg.png" th:src="@{/images/icons/hpreg.png}"></img> <span id="FlatHPPoolMod">0</span></td>
-                        <td><img title="Mana Regeneration" src="../static/images/icons/manareg.png" th:src="@{/images/icons/manareg.png}"></img> <span id="FlatMPPoolMod">0</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Lethality | Armor Penetration" src="../static/images/icons/lethality.png" th:src="@{/images/icons/lethality.png}"></img><span
-                                id="rFlatArmorPenetrationMod">0 | 0%</span></td>
-                        <td><img title="Magic Penetration" src="../static/images/icons/magicpen.png" th:src="@{/images/icons/magicpen.png}" ></img><span
-                                id="rFlatMagicPenetrationMod">0 | 0%</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Life Steal" src="../static/images/icons/lifesteal.png" th:src="@{/images/icons/lifesteal.png}"></img><span id="PercentLifeStealMod">0</span></td>
-                        <td><img title="Spell Vamp" src="../static/images/icons/spellvamp.png" th:src="@{/images/icons/spellvamp.png}"></img><span id="PercentSpellVampMod">0</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Critical Hit Chance" src="../static/images/icons/critchance.png" th:src="@{/images/icons/critchance.png}"></img><span id="FlatCritChanceMod">0</span></td>
-                        <td><img title="Tenacity" src="../static/images/icons/tenacity.png" th:src="@{/images/icons/tenacity.png}" ></img><span id="PercentMovementImpedementResistance">0</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img title="Attack Damage" src="../static/images/icons/attackdamage.png" th:src="@{/images/icons/attackdamage.png}"></img><span id="FlatPhysicalDamageMod">0</span>
-                        </td>
-                        <td><img title=" Ability Power" src="../static/images/icons/abilitypower.png" th:src="@{/images/icons/abilitypower.png}"></img><span id="FlatMagicDamageMod">0</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Armor" src="../static/images/icons/armor.png" th:src="@{/images/icons/armor.png}" ></img><span id="FlatArmorMod">0</span></td>
-                        <td><img title="Magic Resistance" src="../static/images/icons/magicresist.png" th:src="@{/images/icons/magicresist.png}"></img><span id="FlatSpellBlockMod">0</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Attack Speed" src="../static/images/icons/attackspeed.png" th:src="@{/images/icons/attackspeed.png}"></img><span id="BaseAttackSpeed">0</span></td>
-                        <td><img title="Cooldown Reduction" src="../static/images/icons/cooldownreduction.png" th:src="@{/images/icons/cooldownreduction.png}"></img><span
-                                id="rPercentCooldownMod">0</span></td>
-                    </tr>
-                    <tr>
-                        <td><img title="Attack Range" src="../static/images/icons/attackrange.png" th:src="@{/images/icons/attackrange.png}"></img><span id="attack-range">0</span></td>
-                        <td><img title="Movement Speed" src="../static/images/icons/movementspeed.png" th:src="@{/images/icons/movementspeed.png}"></img><span id="FlatMovementSpeedMod">0</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div id="information-container">
-            <div id="ability-info"></div>
-            <div id="item-info">
-                <ul id="unique-effects">
-                    <li>huhsuh</li>
-                    <li>huhsuh</li>
-                    <li>huhsuh</li>
-                    <li>huhsuh</li>
-                    <li>huhsuh</li>
-                </ul>
+            <div id="information-container">
+                <div id="ability-info"></div>
+                <div id="item-info">
+                    <ul id="unique-effects">
+                        <li>huhsuh</li>
+                        <li>huhsuh</li>
+                        <li>huhsuh</li>
+                        <li>huhsuh</li>
+                        <li>huhsuh</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script  src="../static/popTest.js" th:src="@{/popTest.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../static/getTest.js" th:src="@{/getTest.js}"></script>
 </body>
+
 </html>
