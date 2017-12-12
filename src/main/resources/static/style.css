@@ -24,6 +24,14 @@ header {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+header span {
+  color: white;
+}
+
+header p {
+  color: white;
+}
+
 .container {
   background-color: rgba(255, 255, 255, 0.3);
   width: 100%;
@@ -85,7 +93,7 @@ header {
 #left-container #search-container {
   width: 100%;
   height: 10%;
-  background-color: rgba(61, 43, 221, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 #left-container #list-container {
@@ -366,12 +374,11 @@ header {
 #information-container > div {
   width: 50%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 #information-container > div ul {
   list-style-type: none;
-  overflow: hidden;
 }
 
 #information-container > div ul li {
