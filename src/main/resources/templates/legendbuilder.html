@@ -8,11 +8,8 @@
 <body id="body">
 <header>
     <span>Välkommen till LegendBuilder!</span>
-
-   <p th:text="Välkommen + ' ' +${username} +'!'"></p>
-
+   <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
 </header>
-
 
 <div id="container">
     <div id="left-container">
