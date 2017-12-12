@@ -1,43 +1,43 @@
-var api_key = "&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a";
-var champSearchTags = {
-    allytips: "allytips",
-    blurb: "blurb",
-    enemytips: "enemytips",
-    image: "image",
-    info: "info",
-    lore: "lore",
-    partype: "partype",
-    passive: "passive",
-    recommended: "recommended",
-    skins: "skins",
-    spells: "spells",
-    stats: "stats",
-    tags: "tags",
-    keys: "keys",
-}
+// var api_key = "&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a";
+// var champSearchTags = {
+//     allytips: "allytips",
+//     blurb: "blurb",
+//     enemytips: "enemytips",
+//     image: "image",
+//     info: "info",
+//     lore: "lore",
+//     partype: "partype",
+//     passive: "passive",
+//     recommended: "recommended",
+//     skins: "skins",
+//     spells: "spells",
+//     stats: "stats",
+//     tags: "tags",
+//     keys: "keys",
+// }
 
-var itemSearchTags = {
-    colloq: "colloq",
-    consumeOnFull: "consumeOnFull",
-    consumed: "consumed",
-    depth: "depth",
-    effect: "effect",
-    from: "from",
-    gold: "gold",
-    groups: "groups",
-    hideFromAll: "hideFromAll",
-    image: "image",
-    inStore: "inStore",
-    into: "into",
-    maps: "maps",
-    requiredChampion: "requiredChampion",
-    sanitizedDescription: "sanitizedDescription",
-    specialRecipe: "specialRecipe",
-    stacks: "stacks",
-    stats: "stats",
-    tags: "tags",
-    tree: "tree"
-}
+// var itemSearchTags = {
+//     colloq: "colloq",
+//     consumeOnFull: "consumeOnFull",
+//     consumed: "consumed",
+//     depth: "depth",
+//     effect: "effect",
+//     from: "from",
+//     gold: "gold",
+//     groups: "groups",
+//     hideFromAll: "hideFromAll",
+//     image: "image",
+//     inStore: "inStore",
+//     into: "into",
+//     maps: "maps",
+//     requiredChampion: "requiredChampion",
+//     sanitizedDescription: "sanitizedDescription",
+//     specialRecipe: "specialRecipe",
+//     stacks: "stacks",
+//     stats: "stats",
+//     tags: "tags",
+//     tree: "tree"
+// }
 
 var champUrl = "https://eun1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US";
 
@@ -317,10 +317,10 @@ function extractItemStats(itemID) {
     if (allItems.hasOwnProperty(itemID)) {
         item = allItems[itemID];
     }
-    
-    if(itemStats["item-info"] === ""){
+
+    if (itemStats["item-info"] === "") {
         itemStats["item-info"] = clearTags(item["description"]).concat("///");
-    }else{
+    } else {
         itemStats["item-info"] += clearTags(item["description"]).concat("///");
     }
 
@@ -404,6 +404,14 @@ function clearTags(description) {
         "<unique>",
         "</unique>",
     ]
+
+    if (description.indexOf("<stats>") > -1) {
+        let removeThis = description.substring(
+                         description.indexOf(badTags[0]),
+                         description.indexOf(badTags[1]));
+        description = description.replace(removeThis, "");
+    }
+
     for (let i = 0; i < badTags.length; i += 1) {
         while (description.indexOf(badTags[i]) > -1) {
             description = description.replace(badTags[i], "");
@@ -511,7 +519,7 @@ function updateStatsUI() {
             let uniqueEffects = presentableStats[stat];
             console.log("UniqueEffects: " + uniqueEffects);
             let uniqueStrings = uniqueEffects.split("///");
-            
+
             if (presentableStats[stat].length > 0) {
                 for (let i = 0; i < uniqueStrings.length; i++) {
                     let item = document.createElement("li");
@@ -651,7 +659,7 @@ function resetStats() {
 // }
 
 function showAbilityInfoListener(e) {
-    
-    
+
+
     e.id
 }
