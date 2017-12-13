@@ -57,12 +57,11 @@ public class ScoreRepository {
                 statement.setString(1, build.getUsername());
                 statement.setInt(2, build.getChampion());
                 statement.setString(3, build.getTitle());
-                statement.setInt(4, build.getItem1());
-                statement.setInt(5, build.getItem2());
-                statement.setInt(6, build.getItem3());
-                statement.setInt(7, build.getItem4());
-                statement.setInt(8, build.getItem5());
-                statement.setInt(9, build.getItem6());
+                int parameter = 4;
+                for (int item : build.getItems()) {
+                    statement.setInt(parameter, item);
+                    parameter++;
+                }
                 statement.executeUpdate();
             } catch (SQLException e) {
                 System.err.println("saveState didn´t work");
@@ -70,16 +69,16 @@ public class ScoreRepository {
         } else {
             System.err.println("Data is null not OK :(");
         }
-        return "";
+        return "success";
     }
 
 
-    public String validateLogin(String username, String password){
+    public String validateLogin(String username, String password) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement
-                     ("SELECT username,password FROM userLegends WHERE username = ? AND password = ? ")){
-            statement.setString(1,username);
-            statement.setString(2,password);
+                     ("SELECT username,password FROM userLegends WHERE username = ? AND password = ? ")) {
+            statement.setString(1, username);
+            statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
 
             if (!rs.next()) {
@@ -87,8 +86,7 @@ public class ScoreRepository {
             } else {
                 return username;
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println("Great critical error of in validateLogin");
         }
         return "";

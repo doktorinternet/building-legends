@@ -8,13 +8,15 @@
 </head>
 
 <body id="body">
-    <header>
+    <header id="header">
         <span>Välkommen till LegendBuilder!</span>
         <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
-        <form action="#" th:action="@{/savebuild}" th:object="${build}" method="post">
+        <!-- <form action="#" th:action="@{/savebuild}" th:object="${build}" method="post">
             <input type="hidden" id="json-string" th:field="*{jsonString}"/>
             <input type="submit" value="Save build" /> <input type="reset" value="Reset" />
-        </form>
+        </form> -->
+        <button onclick="saveBuild()">Save build</button>
+        <span id="feedback-text"></span>
     </header>
 
     <div class="container">

@@ -22,8 +22,9 @@ public class BuildinglegendsApplicationTests {
 
 	@Test
 	public void main() {
-		Build build = new Build("Andreas",200,"Sr",1,2,3,4,5,6);
-		scoreRepository.saveState(build);
+//		Build build = new Build("Andreas",200,"Sr",1,2,3,4,5,6);
+//		scoreRepository.saveState(build);
+
 	}
 
 
