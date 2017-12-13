@@ -81,12 +81,12 @@ header {
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    >div{
+    >div {
         width: 128px;
     }
     .champion-container {
         height: 148px;
-        padding-top:20px;
+        padding-top: 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -127,10 +127,12 @@ header {
         font-size: 1em;
     }
 }
-#left-container{
+
+#left-container {
     flex: 1 0 28%;
     order: 0;
     max-width: 28%;
+    max-height: 925px;
     border-radius: 0px;
     margin: 0px;
     display: flex;
@@ -142,6 +144,7 @@ header {
     border: solid 1px black;
     overflow: auto;
 }
+
 #middle-container {
     flex: 5 0 30%;
     order: 1;
@@ -150,7 +153,7 @@ header {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: flext-start;
+    justify-content: space-between;
     align-content: stretch;
     overflow: none;
     min-width: 570px;
@@ -169,7 +172,7 @@ header {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: flext-start;
+    justify-content: space-between;
     align-content: stretch;
     min-width: 360px;
     overflow: none;
@@ -186,7 +189,8 @@ header {
     border-radius: 0px;
     margin: 0px;
 }
-#search-container{
+
+#search-container {
     flex: 1 0 8%;
     order: 0;
     border-radius: 0px;
@@ -196,7 +200,7 @@ header {
 }
 
 #champion-container {
-    flex: 0 1 content;
+    flex: 1 1 auto;
     order: 0;
     display: flex;
     flex-direction: column;
@@ -206,7 +210,7 @@ header {
 }
 
 #ability-container {
-    flex: 0 2 auto;
+    flex: 1 2 auto;
     order: 5;
     display: flex;
     flex-direction: row;
@@ -231,14 +235,14 @@ header {
 }
 
 #item-container {
-    flex: 0 1 content;
+    flex: 1 1 auto;
     order: 6;
     min-height: 240;
     min-width: 340;
 }
 
 #ability-info-container {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     order: 2;
     min-width: 300px;
     min-height: 200px;
@@ -249,7 +253,7 @@ header {
 }
 
 #stats-container {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     order: 4;
     display: flex;
     flex-direction: row;
@@ -278,7 +282,7 @@ header {
 }
 
 #item-info-container {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     order: 7;
     min-width: 300px;
     min-height: 200px;
@@ -376,6 +380,7 @@ header {
         border: 1px solid black;
     }
 }
+
 ::-webkit-scrollbar {
     width: 9px;
     height: 9px;
