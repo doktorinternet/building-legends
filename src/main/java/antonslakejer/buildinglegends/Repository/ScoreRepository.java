@@ -1,5 +1,6 @@
 package antonslakejer.buildinglegends.Repository;
 
+import antonslakejer.buildinglegends.domain.Build;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -14,11 +15,10 @@ import java.sql.SQLException;
 @Component
 public class ScoreRepository {
 
-
     @Autowired
     private DataSource dataSource;
 
-    public String addMember(String username, String password,String email) {
+    public String addMember(String username, String password, String email) {
         if (doUserNameExist(username)) {
             return "Användarnamn upptaget!";
         } else if (isUsernameTooShort(username)) {
@@ -46,6 +46,33 @@ public class ScoreRepository {
         }
         return "";
     }
+
+    // ändra så att den tar emot ett objekt
+    public String saveState(Build build) {
+
+        if (dataSource != null) {
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement statement = conn.prepareStatement
+                         ("INSERT INTO savedLegends (username,champion,title,item1,item2,item3,item4,item5,item6) VALUES(?,?,?,?,?,?,?,?,?)")) {
+                statement.setString(1, build.getUsername());
+                statement.setInt(2, build.getChampion());
+                statement.setString(3, build.getTitle());
+                statement.setInt(4, build.getItem1());
+                statement.setInt(5, build.getItem2());
+                statement.setInt(6, build.getItem3());
+                statement.setInt(7, build.getItem4());
+                statement.setInt(8, build.getItem5());
+                statement.setInt(9, build.getItem6());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                System.err.println("saveState didn´t work");
+            }
+        } else {
+            System.err.println("Data is null not OK :(");
+        }
+        return "";
+    }
+
 
     public String validateLogin(String username, String password){
         try (Connection conn = dataSource.getConnection();
