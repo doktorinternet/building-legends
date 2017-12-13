@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
     <title>LegendBuilder</title>
-    <link rel="stylesheet" href="mainstyle.css" />
+    <link rel="stylesheet" href="../static/style.css" th:href="style.css" />
 </head>
 
-<body>
-    <div id="main-container">
-        <header>
-            <span>Välkommen till LegendBuilder!</span>
-        </header>
-        <div id="content-container">
-            <div id="left-container">
-                <div id="search-container"></div>
-                <div class="container" id="list-container"></div>
-            </div>
-            <div id="middle-container">
-                <div class="small-container" id="champion-container">
-                    <h1 id="champion-name">Champion Name</h1>
+<body id="body">
+    <header id="header">
+        <span>Välkommen till LegendBuilder!</span>
+        <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
+        <!-- <form action="#" th:action="@{/savebuild}" th:object="${build}" method="post">
+            <input type="hidden" id="json-string" th:field="*{jsonString}"/>
+            <input type="submit" value="Save build" /> <input type="reset" value="Reset" />
+        </form> -->
+        <button onclick="saveBuild()">Save build</button>
+        <span id="feedback-text"></span>
+    </header>
+
+    <div class="container">
+        <div id="left-container">
+            <div id="search-container"></div>
+            <div id="list-container"></div>
+        </div>
+        <div id="main-container">
+
+
+            <div id="editor-container">
+                <div id="editor-left">
                     <div id="selected-champion" onclick="popAllChampions()"></div>
                     <div id="bars">
                         <div id="health-bar">
@@ -32,7 +41,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="small-container" id="ability-container">
+                <div id="selected-items">
+                    <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
+                    <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
+                    <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
+                    <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
+                    <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
+                    <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
+                </div>
+                <!--<div id="rune-container">Runes</div>-->
+            </div>
+
+            <div id="result-container">
+                <div id="abilities-container">
                     <div id="ability-passive"></div>
                     <div id="ability-q">
                         <img src="../static/images/Letters/abilityq.png" th:src="@{/images/Letters/abilityq.png}"></img>
@@ -47,23 +68,7 @@
                         <img src="../static/images/Letters/abilityr.png" th:src="@{/images/Letters/abilityr.png}"></img>
                     </div>
                 </div>
-                <div class="small-container" id="item-container">
-                    <div id="selected-items">
-                        <div id="item-slot-1" class="item-slot" onclick="selectItemSlot(this, 1)"></div>
-                        <div id="item-slot-2" class="item-slot" onclick="selectItemSlot(this, 2)"></div>
-                        <div id="item-slot-3" class="item-slot" onclick="selectItemSlot(this, 3)"></div>
-                        <div id="item-slot-4" class="item-slot" onclick="selectItemSlot(this, 4)"></div>
-                        <div id="item-slot-5" class="item-slot" onclick="selectItemSlot(this, 5)"></div>
-                        <div id="item-slot-6" class="item-slot" onclick="selectItemSlot(this, 6)"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="right-container">
-
-                <div class="small-container" id="ability-info-container">
-                    <div id="ability-info"></div>
-                </div>
-                <div class="small-container" id="stats-container">
+                <div id="stats-container">
                     <table id="stats-table">
                         <tr>
                             <td>
@@ -147,14 +152,18 @@
                         </tr>
                     </table>
                 </div>
-                <div class="small-container" id="item-info-container">
-                    <div id="item-info"></div>
+            </div>
+
+            <div id="information-container">
+                <div id="ability-info"></div>
+                <div id="item-info">
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="./getTest.js"></script>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../static/getTest.js" th:src="@{/getTest.js}"></script>
 </body>
 
 </html>

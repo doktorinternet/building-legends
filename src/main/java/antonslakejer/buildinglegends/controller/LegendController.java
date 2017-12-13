@@ -38,9 +38,7 @@ public class LegendController {
     @PostMapping("/savebuild")
     @ResponseBody
     public String saveBuild(HttpSession session, @RequestParam String buildString) {
-        System.out.println(buildString);
         Build build = new Build((String) session.getAttribute("user"), buildString);
-        System.out.println(build.toString());
         return scoreRepository.saveState(build);
 //        return "legendbuilder";
     }
