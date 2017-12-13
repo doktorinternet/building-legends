@@ -42,14 +42,14 @@ header {
 #content-container {
     background-color: $fog;
     width: 100%;
-    height: 95%;
-    padding-top: 10vh;
+    height: 95vh;
+    padding-top: 5vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
-    min-width: 1000px;
+    min-width: 900px;
     overflow: auto;
 }
 
@@ -71,20 +71,78 @@ header {
     box-shadow: 5px 5px 5px $shade;
 }
 
-#left-container {
-    flex: 1 0 20%;
+#list-container {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    >div{
+        width: 128px;
+    }
+    .champion-container {
+        height: 148px;
+        padding-top:20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        box-shadow: inset 0px 0px 10px $fog;
+    }
+    .item-container {
+        height: 160px;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        box-shadow: inset 0px 0px 10px $fog;
+    }
+    .name-container {
+        height: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0%;
+    }
+    img {
+        border-radius: 15px;
+        width: 96px;
+        height: 96px;
+        min-height: 96px;
+        min-width: 96px;
+        margin: auto;
+    }
+    span {
+        height: auto;
+        width: 96px;
+        min-width: 96px;
+        text-align: center;
+        justify-self: center;
+        vertical-align: middle;
+        font-size: 1em;
+    }
+}
+#left-container{
+    flex: 1 0 28%;
     order: 0;
-    max-width: 20%;
+    max-width: 28%;
     border-radius: 0px;
     margin: 0px;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: stretch;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: $fog;
+    border: solid 1px black;
+    overflow: auto;
 }
-
-#middle-container{
+#middle-container {
     flex: 5 0 30%;
     order: 1;
     border-radius: 0px;
@@ -104,7 +162,7 @@ header {
 }
 
 #right-container {
-    flex: 5 0 50%;
+    flex: 5 0 40%;
     order: 2;
     border-radius: 0px;
     margin: 0px;
@@ -114,7 +172,7 @@ header {
     justify-content: flext-start;
     align-content: stretch;
     min-width: 360px;
-    overflow:none;
+    overflow: none;
     >div {
         display: flex;
         justify-content: center;
@@ -123,10 +181,18 @@ header {
 }
 
 #list-container {
-    flex: 1 0 100%;
+    flex: 1 0 92%;
+    order: 1;
+    border-radius: 0px;
+    margin: 0px;
+}
+#search-container{
+    flex: 1 0 8%;
     order: 0;
     border-radius: 0px;
     margin: 0px;
+    width: 100%;
+    height: 8%;
 }
 
 #champion-container {
@@ -135,8 +201,8 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width:256px;
-    min-height:420px;
+    min-width: 256px;
+    min-height: 420px;
 }
 
 #ability-container {
@@ -205,7 +271,6 @@ header {
                     height: 100%;
                     font-size: 1.6em;
                     float: left;
-
                 }
             }
         }
@@ -222,8 +287,7 @@ header {
         height: 200px;
         overflow: auto;
         ul {
-            list-style-type: none;
-            //overflow: hidden;
+            list-style-type: none; //overflow: hidden;
             li {
                 margin: 10px;
             }
@@ -312,4 +376,34 @@ header {
         border: 1px solid black;
     }
 }
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
 
+ ::-webkit-scrollbar-button:start:decrement,
+#doc ::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 0;
+    background-color: transparent;
+}
+
+ ::-webkit-scrollbar-track-piece {
+    background-color: #001E19;
+    -webkit-border-radius: 0;
+    -webkit-border-bottom-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+}
+
+ ::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: rgba(228, 176, 86, 0.8);
+    -webkit-border-radius: 8px;
+    box-shadow: inset 5px 5px 5px $shade;
+}
+
+ ::-webkit-scrollbar-thumb:horizontal {
+    width: 50px;
+    background-color: rgba(228, 176, 86, 0.8);
+    -webkit-border-radius: 8px;
+}
