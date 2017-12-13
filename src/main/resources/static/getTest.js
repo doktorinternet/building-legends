@@ -540,7 +540,7 @@ function updateStatsUI() {
             document.getElementById(stat).innerText = presentableStats[stat];
         }
 
-        document.getElementById("json-string").innerText = makeJSON();
+        // document.getElementById("json-string").innerText = makeJSON();
         console.log(makeJSON());
         // console.log(selectedChampion);
         // console.log(selectedItemsArr);
@@ -548,8 +548,23 @@ function updateStatsUI() {
     // console.log("Update End");
 }
 
-function makeBuild(){
-    
+function saveBuild(){
+    var xmlHttp = new XMLHttpRequest();
+    let title = selectedChampion;
+    let items = "";
+    selectedItemsArr.forEach(item => {
+        if(item != undefined){
+            items += item +",";
+        }
+    });
+    var buildURL = "/savebuild?buildString=" + title + "," + selectedChampionKey + "," + items;
+    xmlHttp.open("POST", buildURL, true)
+    xmlHttp.send(null);
+    xmlHttp.onreadystatechange = function (){
+        let feedback = xmlHttp.response;
+        let feedbackElement = document.getElementById("feedback-text");
+        feedbackElement.innerText = feedback;
+    };
 }
 
 function makeJSON() {
