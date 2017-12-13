@@ -1,8 +1,9 @@
 package antonslakejer.buildinglegends.domain;
 
 public class Build {
-    int buildID;
-    String user;
+    String username;
+    int champion;
+    String title;
     int item1;
     int item2;
     int item3;
@@ -10,9 +11,10 @@ public class Build {
     int item5;
     int item6;
 
-    public Build(int buildID, String user, int item1, int item2, int item3, int item4, int item5, int item6) {
-        this.buildID = buildID;
-        this.user = user;
+    public Build(String username, int champion,String title, int item1, int item2, int item3, int item4, int item5, int item6) {
+        this.username = username;
+        this.champion = champion;
+        this.title = title;
         this.item1 = item1;
         this.item2 = item2;
         this.item3 = item3;
@@ -21,21 +23,28 @@ public class Build {
         this.item6 = item6;
     }
 
-    public int getBuildID() {
-
-        return buildID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setBuildID(int buildID) {
-        this.buildID = buildID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUser() {
-        return user;
+    public int getChampion() {
+        return champion;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setChampion(int champion) {
+        this.champion = champion;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getItem1() {
