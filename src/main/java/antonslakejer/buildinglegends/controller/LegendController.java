@@ -1,15 +1,12 @@
 package antonslakejer.buildinglegends.controller;
 
 import antonslakejer.buildinglegends.Repository.ScoreRepository;
-import antonslakejer.buildinglegends.domain.Rune;
+import antonslakejer.buildinglegends.domain.Build;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -20,13 +17,6 @@ public class LegendController {
 
     @Autowired
     private ScoreRepository scoreRepository;
-
-    @GetMapping("/rune")
-    @ResponseBody
-    public List<Rune> sendRunesToJS() {
-        return new ArrayList<>();
-    }
-
 
     @GetMapping("/login")
     public ModelAndView loginPage() {
@@ -48,6 +38,16 @@ public class LegendController {
         }
     }
 
+    @PostMapping("/savebuild")
+    public String saveBuild(HttpSession session, @ModelAttribute Build build){
+        if(session.getAttribute("build") != null){
+//            scoreRepository.saveBuild(build);
+            System.out.println(build.getJsonString());
+            return build.getJsonString();
+        }
+        return "redirect:/legendbuilder";
+    }
+
  /*   @PostMapping("/login")
     public ModelAndView login(HttpSession session, @RequestParam String username, @RequestParam String password) {
         String answer = scoreRepository.validateLogin(username, password);
@@ -58,10 +58,11 @@ public class LegendController {
     }*/
 
     @PostMapping("/login")
-    public String login(HttpSession session, @RequestParam String username, @RequestParam String password) {
+    public String login(Model model, HttpSession session, @RequestParam String username, @RequestParam String password) {
         String answer = scoreRepository.validateLogin(username, password);
         if (answer.equals(username)) {
             session.setAttribute("user", username);
+            model.addAttribute("build", new Build());
             return "legendbuilder";
         } else
             session.setAttribute("loginError",answer);
@@ -71,7 +72,8 @@ public class LegendController {
     @GetMapping("/legendbuilder")
     public ModelAndView legendbuilder(HttpSession session) {
         if (session.getAttribute("user") != null) {
-            return new ModelAndView("legendbuilder");
+//            session.setAttribute("build", new Build());
+            return new ModelAndView("legendbuilder").addObject("build", new Build());
         }
         return new ModelAndView("login");
     }

@@ -11,6 +11,10 @@
     <header>
         <span>Välkommen till LegendBuilder!</span>
         <p th:text="Välkommen + ' ' +${session.user} +'!'"></p>
+        <form action="#" th:action="@{/savebuild}" th:object="${build}" method="post">
+            <input type="hidden" id="json-string" th:field="*{jsonString}"/>
+            <input type="submit" value="Save build" /> <input type="reset" value="Reset" />
+        </form>
     </header>
 
     <div class="container">
@@ -155,6 +159,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../static/getTest.js" th:src="@{/getTest.js}"></script>
 </body>
