@@ -51,6 +51,7 @@ var champUrl = "https://eun1.api.riotgames.com/lol/static-data/v3/champions?loca
 var curLevel = 18;
 var selectedItemSlotID;
 var selectedChampion;
+var selectedChampionKey;
 var selectedItemsArr = [];
 var allItems = {};
 var championStats = {
@@ -171,6 +172,7 @@ function selectChampion(champID) {
         // } else if (coefficient > 0.67 && coefficient < 1) {
         //     skin = 2;
         // }
+
         var backgroundImgSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champID + "_0.jpg\")";
         var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + json["data"][champID]["image"]["full"] + "\")";
         var passivename = json["data"][champID];
@@ -191,6 +193,7 @@ function extractChampionStats(champID, callback) {
     request.send();
     request.onload = function () {
         var json = request.response;
+        selectedChampionKey = json["data"][champID]["key"];
         let champStats = json["data"][champID]["stats"];
         championStats["FlatHPPoolMod"] = champStats["hp"] + (champStats["hpperlevel"] * curLevel);
         championStats["FlatMPPoolMod"] = champStats["mp"] + (champStats["mpperlevel"] * curLevel);
@@ -538,8 +541,39 @@ function updateStatsUI() {
         } else if (document.getElementById(stat) != null && presentableStats[stat] != 0) {
             document.getElementById(stat).innerText = presentableStats[stat];
         }
+
+        document.getElementById("json-string").innerText = makeJSON();
+        console.log(makeJSON());
+        // console.log(selectedChampion);
+        // console.log(selectedItemsArr);
     }
     // console.log("Update End");
+}
+
+function makeJSON() {
+    let title = selectedChampion/*document.getElementById("build-title").value;*/
+    let items = "\"items\": [";
+    for (let i = 0; i < selectedItemsArr.length; i++) {
+        if ("number" == typeof selectedItemsArr[i]) {
+            items = items.concat("{");
+            items = items.concat("\"id\": \"" + selectedItemsArr[i] + "\"");
+            items = items.concat("\"count\": \"1\"");
+            items = items.concat("},");
+        }
+    }
+    items = items.concat("],");
+    let JSON = "{\"title\": "
+        .concat(title)
+        .concat("\"associatedMaps\": [],")
+        .concat("\"associatedChampions\": [")
+        .concat(selectedChampionKey)
+        .concat("],")
+        .concat("\"blocks\": [")
+        .concat("{")
+        .concat(items)
+        .concat("\"type\": \"New Block\"")
+        .concat("}]}");
+    return JSON;
 }
 
 function setupStats() {
@@ -668,3 +702,26 @@ function resetStats() {
 
 //     e.id
 // }
+
+
+function getJavaArray() {
+    arrayFromJava = document.myApplet.getJavaArray();
+
+    alert("Java Array length = " + arrayFromJava.length + "\r\n" +
+        "element 2 is " + arrayFromJava[1]);
+}
+
+function getJavaArrayAsAString() {
+    var arrayAsAString =
+        document.myApplet.getJavaArrayAsAString();
+    realJsString = arrayAsAString + "";
+    arrayFromJava = realJsString.split("|");
+    alert("Java Array length = " + arrayFromJava.length + "\r\n" +
+        "element 2 is " + arrayFromJava[1]);
+}
+
+function putJavaArray() {
+    arrayFromJs = new Array("ARRAY 1", "ARRAY 2", "ARRAY 3");
+    arrayAsAString = arrayFromJs.join("|");
+    document.myApplet.putJavaArray(arrayAsAString);
+}
