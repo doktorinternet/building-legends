@@ -46,8 +46,6 @@ var champUrl = "https://eun1.api.riotgames.com/lol/static-data/v3/champions?loca
 // https://eun1.api.riotgames.com/lol/static-data/v3/items?locale=en_US&tags=colloq&tags=consumeOnFull&tags=consumed&tags=depth&tags=effect&tags=from&tags=gold&tags=groups&tags=hideFromAll&tags=image&tags=inStore&tags=into&tags=maps&tags=requiredChampion&tags=sanitizedDescription&tags=specialRecipe&tags=stacks&tags=stats&tags=tags&tags=tree&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
 // https://eun1.api.riotgames.com/lol/static-data/v3/items/1001?locale=en_US&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
 
-//popAllItems()
-//popAllChampions();
 var curLevel = 18;
 var selectedItemSlotID;
 var selectedChampion;
@@ -550,8 +548,12 @@ function updateStatsUI() {
     // console.log("Update End");
 }
 
+function makeBuild(){
+    
+}
+
 function makeJSON() {
-    let title = selectedChampion/*document.getElementById("build-title").value;*/
+    let title = selectedChampion;/*document.getElementById("build-title").value;*/
     let items = "\"items\": [";
     for (let i = 0; i < selectedItemsArr.length; i++) {
         if ("number" == typeof selectedItemsArr[i]) {
