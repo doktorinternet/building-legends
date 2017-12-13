@@ -138,6 +138,7 @@ header p {
   flex: 1 0 28%;
   order: 0;
   max-width: 28%;
+  max-height: 925px;
   border-radius: 0px;
   margin: 0px;
   display: flex;
@@ -158,7 +159,7 @@ header p {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: flext-start;
+  justify-content: space-between;
   align-content: stretch;
   overflow: none;
   min-width: 570px;
@@ -178,7 +179,7 @@ header p {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: flext-start;
+  justify-content: space-between;
   align-content: stretch;
   min-width: 360px;
   overflow: none;
@@ -203,11 +204,11 @@ header p {
   border-radius: 0px;
   margin: 0px;
   width: 100%;
-  height: 7%;
+  height: 8%;
 }
 
 #champion-container {
-  flex: 0 1 content;
+  flex: 1 1 auto;
   order: 0;
   display: flex;
   flex-direction: column;
@@ -217,7 +218,7 @@ header p {
 }
 
 #ability-container {
-  flex: 0 2 auto;
+  flex: 1 2 auto;
   order: 5;
   display: flex;
   flex-direction: row;
@@ -244,14 +245,14 @@ header p {
 }
 
 #item-container {
-  flex: 0 1 content;
+  flex: 1 1 auto;
   order: 6;
   min-height: 240;
   min-width: 340;
 }
 
 #ability-info-container {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   order: 2;
   min-width: 300px;
   min-height: 200px;
@@ -263,7 +264,7 @@ header p {
 }
 
 #stats-container {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   order: 4;
   display: flex;
   flex-direction: row;
@@ -291,7 +292,7 @@ header p {
 }
 
 #item-info-container {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   order: 7;
   min-width: 300px;
   min-height: 200px;
