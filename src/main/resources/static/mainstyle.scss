@@ -102,6 +102,15 @@ header {
         align-content: center;
         box-shadow: inset 0px 0px 10px $fog;
     }
+    .build-container {
+        height: 160px;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        box-shadow: inset 0px 0px 10px $fog;
+    }
     .name-container {
         height: 64px;
         display: flex;
@@ -109,6 +118,7 @@ header {
         align-items: center;
         margin: 0%;
     }
+    
     img {
         border-radius: 15px;
         width: 96px;

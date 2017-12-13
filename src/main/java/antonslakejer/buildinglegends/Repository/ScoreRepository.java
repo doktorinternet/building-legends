@@ -53,10 +53,10 @@ public class ScoreRepository {
         if (dataSource != null) {
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement statement = conn.prepareStatement
-                         ("INSERT INTO savedLegends (username,champion,title,item1,item2,item3,item4,item5,item6) VALUES(?,?,?,?,?,?,?,?,?)")) {
+                         ("INSERT INTO savedLegends (username,championkey,buildtitle,item1,item2,item3,item4,item5,item6) VALUES(?,?,?,?,?,?,?,?,?)")) {
                 statement.setString(1, build.getUsername());
-                statement.setInt(2, build.getChampion());
-                statement.setString(3, build.getTitle());
+                statement.setInt(2, build.getChampionkey());
+                statement.setString(3, build.getBuildtitle());
                 int parameter = 4;
                 for (int item : build.getItems()) {
                     statement.setInt(parameter, item);
@@ -70,6 +70,41 @@ public class ScoreRepository {
             System.err.println("Data is null not OK :(");
         }
         return "success";
+    }
+
+    public String getBuilds(String username) {
+        String ret = "";
+        if (dataSource != null) {
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement statement = conn.prepareStatement
+                         ("SELECT * FROM savedLegends WHERE username = ?")) {
+                statement.setString(1, username);
+                ResultSet rs = statement.executeQuery();
+//                if (!rs.next()) {
+//                    ret = "No builds found!";
+//                } else {
+                    while (rs.next()) {
+                        ret = ret.concat(rs.getInt("id") + ",");
+                        ret = ret.concat(rs.getString("username") + ",");
+                        ret = ret.concat(rs.getInt("championkey") + ",");
+                        ret = ret.concat(rs.getString("buildtitle") + ",");
+                        ret = ret.concat(rs.getInt("item1") + ",");
+                        ret = ret.concat(rs.getInt("item2") + ",");
+                        ret = ret.concat(rs.getInt("item3") + ",");
+                        ret = ret.concat(rs.getInt("item4") + ",");
+                        ret = ret.concat(rs.getInt("item5") + ",");
+                        ret = ret.concat(rs.getInt("item6") + ",");
+                    }
+//                }
+//                System.out.println("Ret: " + ret);
+
+            } catch (SQLException e) {
+                System.err.println("saveState didn't work");
+            }
+        } else {
+            System.err.println("Data is null not OK :(");
+        }
+        return ret;
     }
 
 

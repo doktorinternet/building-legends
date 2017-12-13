@@ -43,6 +43,12 @@ public class LegendController {
 //        return "legendbuilder";
     }
 
+    @GetMapping("/loadBuilds")
+    @ResponseBody
+    public String loadBuilds(HttpSession session){
+        return scoreRepository.getBuilds((String) session.getAttribute("user"));
+    }
+
     @PostMapping("/login")
     public String login(HttpSession session, @RequestParam String username, @RequestParam String password) {
         String answer = scoreRepository.validateLogin(username, password);

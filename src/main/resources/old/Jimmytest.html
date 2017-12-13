@@ -1,17 +1,94 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> <!-- xmlns:th="http://www.w3.org/1999/xhtml" -->
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>LegendBuilder</title>
-    <link rel="stylesheet" href="../static/style.css"  th:href="/style.css"/>
+    <link rel="stylesheet" href="../static/style.css"/>
 </head>
 <body id="body">
 <header>
     <span>Välkommen till LegendBuilder!</span>
 
-    <p th:text="Välkommen + ' ' +${username} +'!'"></p>
+    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+    <!-- The Modal -->
+    <div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/login" method="post">
+            <div class="imgcontainer">
+                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input type="username" placeholder="Enter Username" name="username" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit">Login</button>
+                <input type="checkbox" checked="checked"> Remember me
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                    Cancel
+                </button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <button onclick="document.getElementById('id01').style.display='block'">Create user</button>
+
+    <!-- The Modal -->
+    <div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/newuser" method="post">
+            <div class="imgcontainer">
+                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input type="username" placeholder="Enter Username" name="username" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <label><b>e-mail</b></label>
+                <input type="e-mail" placeholder="Enter e-mail" name="email" required>
+
+                <button type="submit">Create user</button>
+
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
 
 
+    <!--<form action="savedLegends" method="get">-->
+    <!--<input type="submit" value="login"/>-->
+    <!--<form action="newuser" method="get">-->
+    <!--<input type="submit" value="newuserpage"-->
+    <!--</form>-->
+    <!--</form>-->
+    <!--<form action="newuser" method="post">-->
+    <!--Username: <input name="username" type="text"/>-->
+    <!--Password: <input name="password" type="password"/>-->
+    <!--<button type="submit" value="Create user"/>-->
+    <!--</form>-->
 
 </header>
 
@@ -41,15 +118,15 @@
         <div id="result-container">
             <div id="abilities-container">
                 <div id="ability-passive"></div>
-                <div id="ability-q"><img src="../static/images/Letters/abilityq.png" th:src="/images/Letters/abilityq.png"/></div>
-                <div id="ability-w"><img src="../static/images/Letters/abilityw.png" th:src="/images/Letters/abilityw.png"/></div>
-                <div id="ability-e"><img src="../static/images/Letters/abilitye.png" th:src="/images/Letters/abilitye.png"/></div>
-                <div id="ability-r"><img src="../static/images/Letters/abilityr.png" th:src="/images/Letters/abilityr.png"/></div>
+                <div id="ability-q"><img src="../static/images/Letters/abilityq.png"></div>
+                <div id="ability-w"><img src="../static/images/Letters/abilityw.png"></div>
+                <div id="ability-e"><img src="../static/images/Letters/abilitye.png"></div>
+                <div id="ability-r"><img src="../static/images/Letters/abilityr.png"></div>
             </div>
             <div id="stats-container">
                 <table id="stats-table">
                     <tr>
-                        <td><img src="../static/images/icons/hpreg.png" th:src="/images/icons/hpreg.png"></img><span id="FlatHPPoolMod">0</span></td>
+                        <td><img src="../static/images/icons/hpreg.png"></img><span id="FlatHPPoolMod">0</span></td>
                         <td><img src="../static/images/icons/manareg.png"></img><span id="FlatMPPoolMod">0</span></td>
                     </tr>
                     <tr>
@@ -105,6 +182,6 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="../static/popTest.js"></script>
+<script src="popTest.js"></script>
 </body>
 </html>

@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Build {
     private String username;
-    private int champion;
-    private String title;
+    private int championkey;
+    private String buildtitle;
     private int items[] = new int[6];
 
     public Build(String username, String build) {
@@ -13,8 +13,8 @@ public class Build {
         sc.useDelimiter(",");
         System.out.println(build);
         setUsername(username);
-        setTitle(sc.next());
-        setChampion(sc.nextInt());
+        setBuildtitle(sc.next());
+        setChampionkey(sc.nextInt());
         for (int i = 0; i < items.length; i++) {
             if (sc.hasNext()) {
                 items[i] = sc.nextInt();
@@ -37,24 +37,24 @@ public class Build {
         this.username = username;
     }
 
-    public int getChampion() {
-        return champion;
+    public int getChampionkey() {
+        return championkey;
     }
 
-    public void setChampion(int champion) {
-        this.champion = champion;
+    public void setChampionkey(int championkey) {
+        this.championkey = championkey;
     }
 
-    public String getTitle() {
-        return title;
+    public String getBuildtitle() {
+        return buildtitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBuildtitle(String buildtitle) {
+        this.buildtitle = buildtitle;
     }
 
     @Override
     public String toString() {
-        return String.format("Username: %s BuildTitle: %s Item1: %d",username, title, items[0]);
+        return String.format("Username: %s BuildTitle: %s Item1: %d",username, buildtitle, items[0]);
     }
 }

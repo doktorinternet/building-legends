@@ -39,6 +39,8 @@
 //     tree: "tree"
 // }
 
+let version = "7.24.1"
+
 var champUrl = "https://eun1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US";
 
 // https://eun1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&tags=image&tags=keys&tags=passive&tags=spells&tags=stats&tags=tags&dataById=false&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
@@ -52,6 +54,7 @@ var selectedChampion;
 var selectedChampionKey;
 var selectedItemsArr = [];
 var allItems = {};
+let buildsArray = [];
 var championStats = {
     "FlatHPPoolMod": 0,
     "PercentHPRegen": 0,
@@ -113,7 +116,7 @@ var presentableStats = {
     "crit-chance": 0,
     "tenacity": 0,
     "attack-damage": 0,
-    "ability-power": 0,
+    "ty-power": 0,
     "armor": 0,
     "magic-resist": 0,
     "attack-speed": 0,
@@ -125,7 +128,7 @@ var presentableStats = {
 
 function popAllChampions() {
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion.json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion.json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
@@ -139,7 +142,7 @@ function popAllChampions() {
             myImg.setAttribute("class", "champion-thumb");
             myImg.setAttribute("id", champion);
             myImg.setAttribute("onclick", "selectChampion(this.id)");
-            myImg.src = "http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + json["data"][champion]["image"]["full"];
+            myImg.src = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/" + json["data"][champion]["image"]["full"];
             let myNameDiv = document.createElement("div");
             myNameDiv.setAttribute("class", "name-container");
             let myName = document.createElement("span");
@@ -155,7 +158,7 @@ function popAllChampions() {
 function selectChampion(champID) {
     selectedChampion = champID;
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion.json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion.json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
@@ -172,12 +175,13 @@ function selectChampion(champID) {
         // }
 
         var backgroundImgSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champID + "_0.jpg\")";
-        var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/champion/" + json["data"][champID]["image"]["full"] + "\")";
+        var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/" + json["data"][champID]["image"]["full"] + "\")";
         var passivename = json["data"][champID];
-        var passiveSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/passive/" + champID + "_P.png\")";
+        var passiveSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/passive/" + champID + "_P.png\")";
         document.getElementById("selected-champion").style.backgroundImage = thumbSrc;
-        document.getElementById("body").style.backgroundImage = backgroundImgSrc;
-        setAbilityImage(champID);
+        document.getElementById("main-container").style.backgroundImage = backgroundImgSrc;
+        setImage(champID);
+        displayAbilityTooltips(champID);
         setupStats();
     }
 }
@@ -185,7 +189,7 @@ function selectChampion(champID) {
 function extractChampionStats(champID, callback) {
     // console.log("Extract Champion Start");
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion/" + champID + ".json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion/" + champID + ".json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
@@ -227,24 +231,24 @@ function calculateAttackSpeed(champion) {
     return result;
 }
 
-function setAbilityImage(champID) {
+function setImage(champID) {
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/champion/" + champID + ".json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion/" + champID + ".json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
     request.onload = function () {
         var json = request.response;
         var passiveName = json["data"][champID]["passive"]["image"]["full"];
-        var passiveSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/passive/" + passiveName + "\")";
+        var passiveSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/passive/" + passiveName + "\")";
         var qName = json["data"][champID]["spells"][0]["image"]["full"];
-        var qSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/spell/" + qName + "\")";
+        var qSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/" + qName + "\")";
         var wName = json["data"][champID]["spells"][1]["image"]["full"];
-        var wSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/spell/" + wName + "\")";
+        var wSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/" + wName + "\")";
         var eName = json["data"][champID]["spells"][2]["image"]["full"];
-        var eSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/spell/" + eName + "\")";
+        var eSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/" + eName + "\")";
         var rName = json["data"][champID]["spells"][3]["image"]["full"];
-        var rSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/spell/" + rName + "\")";
+        var rSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/" + rName + "\")";
         document.getElementById("ability-passive").style.backgroundImage = passiveSrc;
         document.getElementById("ability-q").style.backgroundImage = qSrc;
         document.getElementById("ability-w").style.backgroundImage = wSrc;
@@ -256,7 +260,7 @@ function setAbilityImage(champID) {
 
 function popAllItems() {
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/item.json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/item.json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
@@ -271,7 +275,7 @@ function popAllItems() {
             myImg.setAttribute("class", "item-thumb");
             myImg.setAttribute("id", items);
             myImg.setAttribute("onclick", "selectItem(this.id)");
-            myImg.src = "http://ddragon.leagueoflegends.com/cdn/7.24.1/img/item/" + json["data"][items]["image"]["full"];
+            myImg.src = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/" + json["data"][items]["image"]["full"];
             let myNameDiv = document.createElement("div");
             myNameDiv.setAttribute("class", "name-container");
             let myName = document.createElement("span");
@@ -299,13 +303,13 @@ function selectItemSlot(slot, slotID) {
 function selectItem(itemID) {
     selectedItemsArr[selectedItemSlotID - 1] = itemID;
     var request = new XMLHttpRequest();
-    var requestURL = "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/en_US/item.json";
+    var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/item.json";
     request.open("GET", requestURL, true);
     request.responseType = "json";
     request.send();
     request.onload = function () {
         var json = request.response;
-        var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/7.24.1/img/item/" + json["data"][itemID]["image"]["full"] + "\")";
+        var thumbSrc = "url(\"http://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/" + json["data"][itemID]["image"]["full"] + "\")";
         var selectedSlotString = "item-slot-" + selectedItemSlotID;
         document.getElementById(selectedSlotString).style.backgroundImage = thumbSrc;
         setupStats();
@@ -318,8 +322,6 @@ function extractItemStats(itemID) {
     if (allItems.hasOwnProperty(itemID)) {
         item = allItems[itemID];
     }
-
-
 
     if (descriptionHasData(item)) {
         let description = parseDescription(item);
@@ -340,6 +342,41 @@ function extractItemStats(itemID) {
         itemStats["item-info"] = clearTags(item["description"]).concat("///");
     } else {
         itemStats["item-info"] += clearTags(item["description"]).concat("///");
+    }
+}
+
+function displayAbilityTooltips(champID) {
+    let request = new XMLHttpRequest();
+    let url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion/" + champID + ".json";
+    request.responseType = "json";
+    request.open("GET", url, true);
+    request.send();
+    request.onload = () => {
+        let championData = request.response["data"][champID];
+        let abilityTextArray = [];
+
+        abilityTextArray.push(championData["passive"]["description"]);
+
+        for (let i = 0; i < championData["spells"].length; i++) {
+            abilityTextArray.push(championData["spells"][i]["tooltip"]);
+        }
+
+        // console.log(abilityTextArray);
+
+        let abilityView = document.querySelector("#ability-info");
+        abilityView.innerHTML = "";
+        let abilityList = document.createElement("ul");
+        abilityList.id = "ability-effects";
+
+
+        for (let i = 0; i < abilityTextArray.length; i++) {
+            let ability = document.createElement("li");
+            ability.innerHTML = abilityTextArray[i];
+            abilityList.appendChild(ability);
+            abilityList.appendChild(document.createElement("hr"));
+        }
+
+        abilityView.appendChild(abilityList);
     }
 }
 
@@ -522,9 +559,7 @@ function updateStatsUI() {
             itemList.id = "unique-effects";
 
             let uniqueEffects = presentableStats[stat];
-            console.log("UniqueEffects: " + uniqueEffects);
             let uniqueStrings = uniqueEffects.split("///");
-            console.log("UniqueStrings: " + uniqueStrings);
             for (let i = 0; i < uniqueStrings.length; i++) {
                 if (uniqueStrings[i] != "") {
                     let item = document.createElement("li");
@@ -539,32 +574,62 @@ function updateStatsUI() {
         } else if (document.getElementById(stat) != null && presentableStats[stat] != 0) {
             document.getElementById(stat).innerText = presentableStats[stat];
         }
-
-        // document.getElementById("json-string").innerText = makeJSON();
-        console.log(makeJSON());
-        // console.log(selectedChampion);
-        // console.log(selectedItemsArr);
     }
     // console.log("Update End");
 }
 
-function saveBuild(){
-    var xmlHttp = new XMLHttpRequest();
+function saveBuild() {
+    let xmlHttp = new XMLHttpRequest();
     let title = selectedChampion;
     let items = "";
     selectedItemsArr.forEach(item => {
-        if(item != undefined){
-            items += item +",";
+        if (item != undefined) {
+            items += item + ",";
         }
     });
     var buildURL = "/savebuild?buildString=" + title + "," + selectedChampionKey + "," + items;
     xmlHttp.open("POST", buildURL, true)
     xmlHttp.send(null);
-    xmlHttp.onreadystatechange = function (){
+    xmlHttp.onreadystatechange = function () {
         let feedback = xmlHttp.response;
         let feedbackElement = document.getElementById("feedback-text");
         feedbackElement.innerText = feedback;
     };
+}
+
+function loadBuilds() {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/loadBuilds", true)
+    xmlHttp.send(null);
+    xmlHttp.onload = function () {
+        let userBuilds = xmlHttp.response;
+        let rawArray = userBuilds.split(",");
+        console.log(rawArray);
+        for (let i = 0; i < rawArray.length; i += 10) {
+            if (!rawArray[i]) {
+                break;
+            }
+            buildsArray.push({
+                "ID": rawArray[i],
+                "username": rawArray[i + 1],
+                "championkey": rawArray[i + 2],
+                "buildtitle": rawArray[i + 3],
+                "item1": rawArray[i + 4],
+                "item2": rawArray[i + 5],
+                "item3": rawArray[i + 6],
+                "item4": rawArray[i + 7],
+                "item5": rawArray[i + 8],
+                "item6": rawArray[i + 9],
+            });
+        }
+        console.log(buildsArray);
+        // let myDiv = document.createElement("ul");
+        // myDiv.setAttribute("class", "build-container");
+        // let myImg = document.createElement("li");
+        // myImg.setAttribute("class", "build-list-item");
+        // myImg.setAttribute("onclick", "selectBuild(this.id)");
+
+    }
 }
 
 function makeJSON() {
@@ -596,7 +661,7 @@ function makeJSON() {
 function setupStats() {
     // console.log("Setup Start")
     resetStats();
-    if (selectedChampion != null && selectChampion != undefined) {
+    if (selectedChampion != null && selectedChampion != undefined) {
         extractChampionStats(selectedChampion, function () {
 
             if (selectedItemsArr.length > 0) {
@@ -631,7 +696,7 @@ function prepareStats() {
     presentableStats["tenacity"] = itemStats["PercentMovementImpedementResistance"] + "%";
     presentableStats["attack-damage"] = Math.round(itemStats["FlatPhysicalDamageMod"] +
         championStats["FlatPhysicalDamageMod"]);
-    presentableStats["ability-power"] = Math.round(itemStats["FlatMagicDamageMod"] +
+    presentableStats["ty-power"] = Math.round(itemStats["FlatMagicDamageMod"] +
         championStats["FlatMagicDamageMod"]);
     presentableStats["armor"] = Math.round(itemStats["FlatArmorMod"] + championStats["FlatArmorMod"]);
     presentableStats["magic-resist"] = Math.round(itemStats["FlatSpellBlockMod"] +
@@ -639,7 +704,7 @@ function prepareStats() {
     presentableStats["attack-speed"] = ((1 + itemStats["PercentAttackSpeedMod"]) *
         championStats["BaseAttackSpeed"]).toFixed(3);
 
-    presentableStats["cooldown-reduction"] = (100 * itemStats["rPercentCooldownMod"]) + "%";
+    presentableStats["cooldown-reduction"] = Math.round((100 * itemStats["rPercentCooldownMod"]) + "%");
     presentableStats["attack-range"] = itemStats["attack-range"] + championStats["attack-range"];
     presentableStats["movement-speed"] = Math.round((itemStats["FlatMovementSpeedMod"] +
         championStats["FlatMovementSpeedMod"]) * (1 + itemStats["PercentMovementSpeedMod"]));
@@ -714,31 +779,8 @@ function resetStats() {
 //     document.getElementById("searchRow").appendChild(mySpan);
 // }
 
-// function showAbilityInfoListener(e) {
+// function showtyInfoListener(e) {
 
 
 //     e.id
 // }
-
-
-function getJavaArray() {
-    arrayFromJava = document.myApplet.getJavaArray();
-
-    alert("Java Array length = " + arrayFromJava.length + "\r\n" +
-        "element 2 is " + arrayFromJava[1]);
-}
-
-function getJavaArrayAsAString() {
-    var arrayAsAString =
-        document.myApplet.getJavaArrayAsAString();
-    realJsString = arrayAsAString + "";
-    arrayFromJava = realJsString.split("|");
-    alert("Java Array length = " + arrayFromJava.length + "\r\n" +
-        "element 2 is " + arrayFromJava[1]);
-}
-
-function putJavaArray() {
-    arrayFromJs = new Array("ARRAY 1", "ARRAY 2", "ARRAY 3");
-    arrayAsAString = arrayFromJs.join("|");
-    document.myApplet.putJavaArray(arrayAsAString);
-}
