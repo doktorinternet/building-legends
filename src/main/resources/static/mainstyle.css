@@ -106,14 +106,23 @@ header p {
   box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.3);
 }
 
-#list-container .build-container {
-  height: 160px;
-  padding-top: 20px;
+#list-container .loaded-build {
+  height: 200px;
+  width: 200px;
+  background-size: cover;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.3);
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+#list-container .item-thumb {
+  height: 64px;
+  width: 64px;
+  min-height: 64px;
+  min-width: 64px;
 }
 
 #list-container .name-container {
