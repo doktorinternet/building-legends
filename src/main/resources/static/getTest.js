@@ -1,52 +1,5 @@
-// var api_key = "&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a";
-// var champSearchTags = {
-//     allytips: "allytips",
-//     blurb: "blurb",
-//     enemytips: "enemytips",
-//     image: "image",
-//     info: "info",
-//     lore: "lore",
-//     partype: "partype",
-//     passive: "passive",
-//     recommended: "recommended",
-//     skins: "skins",
-//     spells: "spells",
-//     stats: "stats",
-//     tags: "tags",
-//     keys: "keys",
-// }
 
-// var itemSearchTags = {
-//     colloq: "colloq",
-//     consumeOnFull: "consumeOnFull",
-//     consumed: "consumed",
-//     depth: "depth",
-//     effect: "effect",
-//     from: "from",
-//     gold: "gold",
-//     groups: "groups",
-//     hideFromAll: "hideFromAll",
-//     image: "image",
-//     inStore: "inStore",
-//     into: "into",
-//     maps: "maps",
-//     requiredChampion: "requiredChampion",
-//     sanitizedDescription: "sanitizedDescription",
-//     specialRecipe: "specialRecipe",
-//     stacks: "stacks",
-//     stats: "stats",
-//     tags: "tags",
-//     tree: "tree"
-// }
-
-let version = "7.24.1"
-
-var champUrl = "https://eun1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US";
-
-// https://eun1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&tags=image&tags=keys&tags=passive&tags=spells&tags=stats&tags=tags&dataById=false&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
-// https://eun1.api.riotgames.com/lol/static-data/v3/champions/266?locale=en_US&tags=allytips&tags=blurb&tags=enemytips&tags=image&tags=info&tags=lore&tags=partype&tags=passive&tags=recommended&tags=skins&tags=spells&tags=stats&tags=tags&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
-// https://eun1.api.riotgames.com/lol/static-data/v3/items?locale=en_US&tags=colloq&tags=consumeOnFull&tags=consumed&tags=depth&tags=effect&tags=from&tags=gold&tags=groups&tags=hideFromAll&tags=image&tags=inStore&tags=into&tags=maps&tags=requiredChampion&tags=sanitizedDescription&tags=specialRecipe&tags=stacks&tags=stats&tags=tags&tags=tree&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
-// https://eun1.api.riotgames.com/lol/static-data/v3/items/1001?locale=en_US&api_key=RGAPI-9473df52-0728-4513-a12e-7aa5dd60093a
+var version = "7.24.1";
 
 var curLevel = 18;
 var selectedItemSlotID;
@@ -54,7 +7,22 @@ var selectedChampion;
 var selectedChampionKey;
 var selectedItemsArr = [];
 var allItems = {};
-let buildsArray = [];
+var buildsArray = [];
+
+var partypeColors = {
+    "Blood Well": "grey",
+    "Mana": "blue",
+    "Flow": "white",
+    "Energy": "rgba(255, 200, 0, 1)",
+    "Crimson Rush": "grey",
+    "Fury": "red",
+    "Heat": "white",
+    "None": "transparent",
+    "Ferocity": "orange",
+    "Shield": "grey",
+    "Courage": "white",
+    "Rage": "Red",
+};
 var championStats = {
     "FlatHPPoolMod": 0,
     "PercentHPRegen": 0,
@@ -78,6 +46,7 @@ var championStats = {
     "attack-range": 0,
     "PercentMovementSpeedMod": 0,
     "FlatMovementSpeedMod": 0,
+    "partype": "",
 };
 var itemStats = {
     "FlatHPPoolMod": 0,
@@ -116,7 +85,7 @@ var presentableStats = {
     "crit-chance": 0,
     "tenacity": 0,
     "attack-damage": 0,
-    "ty-power": 0,
+    "ability-power": 0,
     "armor": 0,
     "magic-resist": 0,
     "attack-speed": 0,
@@ -124,6 +93,7 @@ var presentableStats = {
     "attack-range": 0,
     "movement-speed": 0,
     "item-info": "",
+    "partype": "",
 };
 
 function popAllChampions() {
@@ -187,7 +157,6 @@ function selectChampion(champID) {
 }
 
 function extractChampionStats(champID, callback) {
-    // console.log("Extract Champion Start");
     var request = new XMLHttpRequest();
     var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/champion/" + champID + ".json";
     request.open("GET", requestURL, true);
@@ -208,6 +177,7 @@ function extractChampionStats(champID, callback) {
         championStats["FlatCritChanceMod"] = champStats["crit"] + (champStats["critperlevel"] * curLevel);
         championStats["FlatPhysicalDamageMod"] = champStats["attackdamage"] + (champStats["attackdamageperlevel"] * curLevel);
         championStats["BaseAttackSpeed"] = calculateAttackSpeed(champStats);
+        championStats["partype"] = json["data"][champID]["partype"];
         callback();
     }
 }
@@ -219,7 +189,6 @@ function calculateAttackSpeed(champion) {
     let base = 0.625 / (1 + offset);
     let result = 0;
 
-    // let growthStat = base + asplv * (curLevel - 1) * (0.685 + 0.0175 * curLevel)
     let bonusAS = (asPerLevel * (7 / 400 * (curLevel * curLevel - 1) + 267 / 400 * (curLevel - 1))) / 100;
     if (itemsMod > 0) {
         let items = itemsMod;
@@ -317,7 +286,6 @@ function selectItem(itemID) {
 }
 
 function extractItemStats(itemID) {
-    // console.log("ExtractItemStats from " + itemID);
     var item = {};
     if (allItems.hasOwnProperty(itemID)) {
         item = allItems[itemID];
@@ -358,10 +326,10 @@ function displayAbilityTooltips(champID) {
         abilityTextArray.push(championData["passive"]["description"]);
 
         for (let i = 0; i < championData["spells"].length; i++) {
-            abilityTextArray.push(championData["spells"][i]["tooltip"]);
+            // abilityTextArray.push(championData["spells"][i]["tooltip"]); Ifall vi löser variabelproblemet
+            abilityTextArray.push(championData["spells"][i]["description"]);
         }
 
-        // console.log(abilityTextArray);
 
         let abilityView = document.querySelector("#ability-info");
         abilityView.innerHTML = "";
@@ -463,7 +431,6 @@ function clearTags(description) {
 }
 
 function extractDefensePenetration(description) {
-    // console.log(description);
     let searchKeys = {
         lethalityKey: " <a href='Lethality'",
         flatMagicKey: " <a href='FlatMagicPen'>",
@@ -549,45 +516,52 @@ function extractCDR(description) {
 }
 
 function updateStatsUI() {
-    // console.log("Update Start");
     for (let stat in presentableStats) {
-        if (stat == "item-info" && "number" != typeof presentableStats[stat]) {
+        if (stat != "partype") {
+            if (stat == "item-info" && "number" != typeof presentableStats[stat]) {
 
-            let uniqueView = document.querySelector("#item-info");
-            uniqueView.innerHTML = "";
-            let itemList = document.createElement("ul");
-            itemList.id = "unique-effects";
+                let uniqueView = document.querySelector("#item-info");
+                uniqueView.innerHTML = "";
+                let itemList = document.createElement("ul");
+                itemList.id = "unique-effects";
 
-            let uniqueEffects = presentableStats[stat];
-            let uniqueStrings = uniqueEffects.split("///");
-            for (let i = 0; i < uniqueStrings.length; i++) {
-                if (uniqueStrings[i] != "") {
-                    let item = document.createElement("li");
-                    item.innerHTML = uniqueStrings[i];
-                    itemList.appendChild(item);
-                    itemList.appendChild(document.createElement("hr"));
+                let uniqueEffects = presentableStats[stat];
+                let uniqueStrings = uniqueEffects.split("///");
+                for (let i = 0; i < uniqueStrings.length; i++) {
+                    if (uniqueStrings[i] != "") {
+                        let item = document.createElement("li");
+                        item.innerHTML = uniqueStrings[i];
+                        itemList.appendChild(item);
+                        itemList.appendChild(document.createElement("hr"));
+                    }
+                }
+
+                uniqueView.appendChild(itemList);
+
+            } else if (document.getElementById(stat) != null && presentableStats[stat] != 0) {
+                if (stat === "mana-pool") {
+                    let node = document.querySelector("#mana-bar :first-child");
+                    node.innerText = presentableStats["partype"] + ":";
+                    document.getElementById("mana-bar").style.backgroundColor = partypeColors[presentableStats["partype"]];
+                    document.getElementById(stat).innerText = presentableStats[stat];
+                } else {
+                    document.getElementById(stat).innerText = presentableStats[stat];
                 }
             }
-
-            uniqueView.appendChild(itemList);
-
-        } else if (document.getElementById(stat) != null && presentableStats[stat] != 0) {
-            document.getElementById(stat).innerText = presentableStats[stat];
         }
     }
-    // console.log("Update End");
 }
 
 function saveBuild() {
     let xmlHttp = new XMLHttpRequest();
-    let title = selectedChampion;
+    let title = selectedChampion; // document.getElementById("build-title").value;
     let items = "";
     selectedItemsArr.forEach(item => {
         if (item != undefined) {
             items += item + ",";
         }
     });
-    var buildURL = "/savebuild?buildString=" + title + "," + selectedChampionKey + "," + items;
+    var buildURL = "/savebuild?buildString=" + title + "," + selectedChampion + "," + selectedChampionKey + "," + items;
     xmlHttp.open("POST", buildURL, true)
     xmlHttp.send(null);
     xmlHttp.onreadystatechange = function () {
@@ -604,36 +578,29 @@ function loadBuilds() {
     xmlHttp.onload = function () {
         let userBuilds = xmlHttp.response;
         let rawArray = userBuilds.split(",");
-        console.log(rawArray);
-        for (let i = 0; i < rawArray.length; i += 10) {
+        for (let i = 0; i < rawArray.length; i += 11) {
             if (!rawArray[i]) {
                 break;
             }
             buildsArray.push({
                 "ID": rawArray[i],
                 "username": rawArray[i + 1],
-                "championkey": rawArray[i + 2],
-                "buildtitle": rawArray[i + 3],
-                "item1": rawArray[i + 4],
-                "item2": rawArray[i + 5],
-                "item3": rawArray[i + 6],
-                "item4": rawArray[i + 7],
-                "item5": rawArray[i + 8],
-                "item6": rawArray[i + 9],
+                "championName": rawArray[i + 2],
+                "championkey": rawArray[i + 3],
+                "buildtitle": rawArray[i + 4],
+                "item1": rawArray[i + 5],
+                "item2": rawArray[i + 6],
+                "item3": rawArray[i + 7],
+                "item4": rawArray[i + 8],
+                "item5": rawArray[i + 9],
+                "item6": rawArray[i + 10],
             });
         }
-        console.log(buildsArray);
-        // let myDiv = document.createElement("ul");
-        // myDiv.setAttribute("class", "build-container");
-        // let myImg = document.createElement("li");
-        // myImg.setAttribute("class", "build-list-item");
-        // myImg.setAttribute("onclick", "selectBuild(this.id)");
-
     }
 }
 
 function makeJSON() {
-    let title = selectedChampion;/*document.getElementById("build-title").value;*/
+    let title = selectedChampion;//document.getElementById("build-title").value;
     let items = "\"items\": [";
     for (let i = 0; i < selectedItemsArr.length; i++) {
         if ("number" == typeof selectedItemsArr[i]) {
@@ -659,7 +626,6 @@ function makeJSON() {
 }
 
 function setupStats() {
-    // console.log("Setup Start")
     resetStats();
     if (selectedChampion != null && selectedChampion != undefined) {
         extractChampionStats(selectedChampion, function () {
@@ -675,7 +641,6 @@ function setupStats() {
             updateStatsUI();
         });
     }
-    // console.log("Setup End");
 }
 
 function prepareStats() {
@@ -685,7 +650,15 @@ function prepareStats() {
     presentableStats["mana-regen"] = Math.round((championStats["PercentMPRegen"] *
         (1 + itemStats["PercentMPRegen"])) / 5) + "/s";
     presentableStats["health-pool"] = Math.round(championStats["FlatHPPoolMod"] + itemStats["FlatHPPoolMod"]);
-    presentableStats["mana-pool"] = Math.round(championStats["FlatMPPoolMod"] + itemStats["FlatMPPoolMod"]);
+
+    presentableStats["partype"] = championStats["partype"];
+
+    if (presentableStats["partype"] != "Mana") {
+        presentableStats["mana-pool"] = Math.round(championStats["FlatMPPoolMod"]);
+    } else {
+        presentableStats["mana-pool"] = Math.round(championStats["FlatMPPoolMod"] + itemStats["FlatMPPoolMod"]);
+    }
+
     presentableStats["armor-penetration"] = itemStats["rFlatArmorPenetrationMod"] + " | " +
         itemStats["PercentArmorPenetrationMod"] + "%";
     presentableStats["magic-penetration"] = itemStats["rFlatMagicPenetrationMod"] + " | " +
@@ -696,7 +669,7 @@ function prepareStats() {
     presentableStats["tenacity"] = itemStats["PercentMovementImpedementResistance"] + "%";
     presentableStats["attack-damage"] = Math.round(itemStats["FlatPhysicalDamageMod"] +
         championStats["FlatPhysicalDamageMod"]);
-    presentableStats["ty-power"] = Math.round(itemStats["FlatMagicDamageMod"] +
+    presentableStats["ability-power"] = Math.round(itemStats["FlatMagicDamageMod"] +
         championStats["FlatMagicDamageMod"]);
     presentableStats["armor"] = Math.round(itemStats["FlatArmorMod"] + championStats["FlatArmorMod"]);
     presentableStats["magic-resist"] = Math.round(itemStats["FlatSpellBlockMod"] +
@@ -704,14 +677,11 @@ function prepareStats() {
     presentableStats["attack-speed"] = ((1 + itemStats["PercentAttackSpeedMod"]) *
         championStats["BaseAttackSpeed"]).toFixed(3);
 
-    presentableStats["cooldown-reduction"] = Math.round((100 * itemStats["rPercentCooldownMod"]) + "%");
+    presentableStats["cooldown-reduction"] = Math.round((100 * itemStats["rPercentCooldownMod"])) + "%";
     presentableStats["attack-range"] = itemStats["attack-range"] + championStats["attack-range"];
     presentableStats["movement-speed"] = Math.round((itemStats["FlatMovementSpeedMod"] +
         championStats["FlatMovementSpeedMod"]) * (1 + itemStats["PercentMovementSpeedMod"]));
     presentableStats["item-info"] = itemStats["item-info"];
-    // console.log("Item info: " + itemStats["item-info"]);
-    // console.log("Presentable Stats: ");
-    // console.log(presentableStats);
 }
 
 function isMultiplier(stat) {
@@ -730,7 +700,6 @@ function isMultiplier(stat) {
 }
 
 function resetStats() {
-    // console.log("Reset Start");
     for (let stat in championStats) {
         championStats[stat] = 0;
     }
@@ -744,7 +713,6 @@ function resetStats() {
     presentableStats["item-info"] = "";
     itemStats["item-info"] = "";
 
-    // console.log("Reset End");
 }
 
 // function loadJSON(callback) {

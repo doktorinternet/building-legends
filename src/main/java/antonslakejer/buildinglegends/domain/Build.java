@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Build {
     private String username;
+    private String championname;
+
     private int championkey;
     private String buildtitle;
     private int items[] = new int[6];
@@ -11,9 +13,10 @@ public class Build {
     public Build(String username, String build) {
         Scanner sc = new Scanner(build);
         sc.useDelimiter(",");
-        System.out.println(build);
+//        System.out.println(build);
         setUsername(username);
         setBuildtitle(sc.next());
+        setChampionname(sc.next());
         setChampionkey(sc.nextInt());
         for (int i = 0; i < items.length; i++) {
             if (sc.hasNext()) {
@@ -23,6 +26,14 @@ public class Build {
             }
         }
         sc.close();
+    }
+
+    public String getChampionname() {
+        return championname;
+    }
+
+    public void setChampionname(String championname) {
+        this.championname = championname;
     }
 
     public int[] getItems(){
