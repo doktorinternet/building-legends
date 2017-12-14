@@ -53,11 +53,12 @@ public class ScoreRepository {
         if (dataSource != null) {
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement statement = conn.prepareStatement
-                         ("INSERT INTO savedLegends (username,championkey,buildtitle,item1,item2,item3,item4,item5,item6) VALUES(?,?,?,?,?,?,?,?,?)")) {
+                         ("INSERT INTO savedLegends (username,championname,championkey,buildtitle,item1,item2,item3,item4,item5,item6) VALUES(?,?,?,?,?,?,?,?,?,?)")) {
                 statement.setString(1, build.getUsername());
-                statement.setInt(2, build.getChampionkey());
-                statement.setString(3, build.getBuildtitle());
-                int parameter = 4;
+                statement.setString(2, build.getChampionname());
+                statement.setInt(3, build.getChampionkey());
+                statement.setString(4, build.getBuildtitle());
+                int parameter = 5;
                 for (int item : build.getItems()) {
                     statement.setInt(parameter, item);
                     parameter++;
@@ -83,18 +84,19 @@ public class ScoreRepository {
 //                if (!rs.next()) {
 //                    ret = "No builds found!";
 //                } else {
-                    while (rs.next()) {
-                        ret = ret.concat(rs.getInt("id") + ",");
-                        ret = ret.concat(rs.getString("username") + ",");
-                        ret = ret.concat(rs.getInt("championkey") + ",");
-                        ret = ret.concat(rs.getString("buildtitle") + ",");
-                        ret = ret.concat(rs.getInt("item1") + ",");
-                        ret = ret.concat(rs.getInt("item2") + ",");
-                        ret = ret.concat(rs.getInt("item3") + ",");
-                        ret = ret.concat(rs.getInt("item4") + ",");
-                        ret = ret.concat(rs.getInt("item5") + ",");
-                        ret = ret.concat(rs.getInt("item6") + ",");
-                    }
+                while (rs.next()) {
+                    ret = ret.concat(rs.getInt("id") + ",");
+                    ret = ret.concat(rs.getString("username") + ",");
+                    ret = ret.concat(rs.getString("championname") + ",");
+                    ret = ret.concat(rs.getInt("championkey") + ",");
+                    ret = ret.concat(rs.getString("buildtitle") + ",");
+                    ret = ret.concat(rs.getInt("item1") + ",");
+                    ret = ret.concat(rs.getInt("item2") + ",");
+                    ret = ret.concat(rs.getInt("item3") + ",");
+                    ret = ret.concat(rs.getInt("item4") + ",");
+                    ret = ret.concat(rs.getInt("item5") + ",");
+                    ret = ret.concat(rs.getInt("item6") + ",");
+                }
 //                }
 //                System.out.println("Ret: " + ret);
 
