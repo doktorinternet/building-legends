@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -58,6 +60,15 @@ public class LegendController {
         } else
             session.setAttribute("loginError", answer);
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, HttpServletResponse res) {
+        session.invalidate();
+        Cookie cookie = new Cookie("JSESSIONID", "");
+        cookie.setMaxAge(0);
+        res.addCookie(cookie);
+        return "legendbuilder";
     }
 
     @GetMapping("/legendbuilder")
