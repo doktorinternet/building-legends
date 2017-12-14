@@ -104,7 +104,7 @@ function popAllChampions() {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  request.onload = function () {
     document.getElementById("list-container").innerHTML = "";
     var json = request.response;
     for (champion in json["data"]) {
@@ -141,7 +141,7 @@ function selectChampion(champID) {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  request.onload = function () {
     var json = request.response;
     // let coefficient = Math.random();
     // let skin;
@@ -193,7 +193,7 @@ function extractChampionStats(champID, callback) {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  request.onload = function () {
     var json = request.response;
     selectedChampionKey = json["data"][champID]["key"];
     let champStats = json["data"][champID]["stats"];
@@ -254,7 +254,7 @@ function setImage(champID) {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  request.onload = function () {
     var json = request.response;
     var passiveName = json["data"][champID]["passive"]["image"]["full"];
     var passiveSrc =
@@ -310,7 +310,7 @@ function popAllItems() {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  request.onload = function () {
     document.getElementById("list-container").innerHTML = "";
     var json = request.response;
     allItems = json["data"]; // FIXME: kanske ta bort
@@ -344,7 +344,7 @@ function selectItemSlot(slot, slotID) {
   selectedItemSlotID = slotID;
   selectedItemsArr[selectedItemSlotID - 1] = undefined;
   setupStats();
-  $(".item-slot").each(function() {
+  $(".item-slot").each(function () {
     this.style.boxShadow = "";
   });
   slot.style.boxShadow = "inset 0px 0px 100px cyan";
@@ -353,25 +353,16 @@ function selectItemSlot(slot, slotID) {
 function selectItem(itemID) {
   selectedItemsArr[selectedItemSlotID - 1] = itemID;
   var request = new XMLHttpRequest();
-  var requestURL =
-    "http://ddragon.leagueoflegends.com/cdn/" +
-    version +
-    "/data/en_US/item.json";
+  var requestURL = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/item.json";
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  request.onload = function() {
+  
+  request.onload = function () {
     var json = request.response;
-    var thumbSrc =
-      'url("http://ddragon.leagueoflegends.com/cdn/' +
-      version +
-      "/img/item/" +
-      json["data"][itemID]["image"]["full"] +
-      '")';
+    var thumbSrc = 'url("http://ddragon.leagueoflegends.com/cdn/' + version + "/img/item/" + json["data"][itemID]["image"]["full"] + '")';
     var selectedSlotString = "item-slot-" + selectedItemSlotID;
-    document.getElementById(
-      selectedSlotString
-    ).style.backgroundImage = thumbSrc;
+    document.getElementById(selectedSlotString).style.backgroundImage = thumbSrc;
     setupStats();
   };
 }
@@ -380,26 +371,27 @@ function extractItemStats(itemID) {
   var item = {};
   if (allItems.hasOwnProperty(itemID)) {
     item = allItems[itemID];
-  }
 
-  if (descriptionHasData(item)) {
-    let description = parseDescription(item);
-    for (let key in description) {
-      itemStats[key] += description[key];
-      validateStats();
+    if (descriptionHasData(item)) {
+      let description = parseDescription(item);
+      for (let key in description) {
+        itemStats[key] += description[key];
+        validateStats();
+      }
     }
-  }
 
-  for (let key in item["stats"]) {
-    if (itemStats.hasOwnProperty(key)) {
-      itemStats[key] += item["stats"][key];
+    for (let key in item["stats"]) {
+      if (itemStats.hasOwnProperty(key)) {
+        itemStats[key] += item["stats"][key];
+      }
     }
-  }
 
-  if (itemStats["item-info"] === "") {
-    itemStats["item-info"] = clearTags(item["description"]).concat("///");
+    if (itemStats["item-info"] === "") {
+      itemStats["item-info"] = clearTags(item["description"]).concat("///");
+    } else {
+      itemStats["item-info"] += clearTags(item["description"]).concat("///");
+    }
   } else {
-    itemStats["item-info"] += clearTags(item["description"]).concat("///");
   }
 }
 
@@ -629,10 +621,7 @@ function updateStatsUI() {
         }
 
         uniqueView.appendChild(itemList);
-      } else if (
-        document.getElementById(stat) != null &&
-        presentableStats[stat] != 0
-      ) {
+      } else if (document.getElementById(stat) != null && presentableStats[stat] != 0) {
         if (stat === "mana-pool") {
           let node = document.querySelector("#mana-bar :first-child");
           node.innerText = presentableStats["partype"] + ":";
@@ -667,7 +656,7 @@ function saveBuild() {
     items;
   xmlHttp.open("POST", buildURL, true);
   xmlHttp.send(null);
-  xmlHttp.onreadystatechange = function() {
+  xmlHttp.onreadystatechange = function () {
     let feedback = xmlHttp.response;
     let feedbackElement = document.getElementById("feedback-text");
     feedbackElement.innerText = feedback;
@@ -678,9 +667,17 @@ function loadBuilds() {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", "/loadBuilds", true);
   xmlHttp.send(null);
-  xmlHttp.onload = function() {
+
+  // Reset the list from last press
+  if (buildsArray.length) {
+    buildsArray.length = 0;
+  }
+
+  buildsArray = [];
+  xmlHttp.onload = function () {
     let userBuilds = xmlHttp.response;
     let rawArray = userBuilds.split(",");
+
     for (let i = 0; i < rawArray.length; i += 11) {
       if (!rawArray[i]) {
         break;
@@ -699,15 +696,15 @@ function loadBuilds() {
         item6: rawArray[i + 10]
       });
     }
+    popAllSaves(buildsArray);
   };
-  popAllSaves(buildsArray);
 }
 
 function makeJSON() {
   let title = selectedChampion; //document.getElementById("build-title").value;
   let items = '"items": [';
   for (let i = 0; i < selectedItemsArr.length; i++) {
-    if ("number" == typeof selectedItemsArr[i]) {
+    if ("number" == typeof selectedItemsArr[i] && selectedItemsArr != 0) {
       items = items.concat("{");
       items = items.concat('"id": "' + selectedItemsArr[i] + '"');
       items = items.concat('"count": "1"');
@@ -732,10 +729,10 @@ function makeJSON() {
 function setupStats() {
   resetStats();
   if (selectedChampion != null && selectedChampion != undefined) {
-    extractChampionStats(selectedChampion, function() {
+    extractChampionStats(selectedChampion, function () {
       if (selectedItemsArr.length > 0) {
         selectedItemsArr.forEach(item => {
-          if (item != undefined || item != null) {
+          if (item != undefined && item != null && item != 0) {
             extractItemStats(item);
           }
         });
@@ -808,7 +805,7 @@ function prepareStats() {
   presentableStats["movement-speed"] = Math.round(
     (itemStats["FlatMovementSpeedMod"] +
       championStats["FlatMovementSpeedMod"]) *
-      (1 + itemStats["PercentMovementSpeedMod"])
+    (1 + itemStats["PercentMovementSpeedMod"])
   );
   presentableStats["item-info"] = itemStats["item-info"];
 }
@@ -889,7 +886,7 @@ function popAllSaves(buildsArr) {
   champRequest.open("GET", champRequestURL, true);
   champRequest.responseType = "json";
   champRequest.send();
-  champRequest.onload = function() {
+  champRequest.onload = function () {
     var champjson = champRequest.response;
     var itemRequest = new XMLHttpRequest();
     var itemRequestURL =
@@ -899,53 +896,46 @@ function popAllSaves(buildsArr) {
     itemRequest.open("GET", itemRequestURL, true);
     itemRequest.responseType = "json";
     itemRequest.send();
-    itemRequest.onload = function() {
-      var itemjson = itemRequest.response;
+    itemRequest.onload = function () {
+      allItems = itemRequest.response["data"];
+      document.getElementById("list-container").innerHTML = "";
       for (let i = 0; i < buildsArr.length; i += 1) {
         let b = buildsArr[i];
         let myDiv = document.createElement("div");
         let champID = b["championName"];
-        let champThumbSrc =
-          'url("http://ddragon.leagueoflegends.com/cdn/' +
-          version +
-          "/img/champion/" +
-          champjson["data"][champID]["image"]["full"] +
-          '")';
-        myDiv.setAttribute("class", "loaded-build");
-        myDiv.setAttribute(
-          "onclick",
-          "selectBuild(" +
-            champID +
-            "," +
-            b["buildtitle"] +
-            "," +
-            b["item1"] +
-            "," +
-            b["item2"] +
-            "," +
-            b["item3"] +
-            "," +
-            b["item4"] +
-            "," +
-            b["item5"] +
-            "," +
-            b["item6"] +
-            ")"
-        );
-        myDiv.style.backgroundImage = champThumbSrc;
+        let buildTitle = b["buildtitle"];
+        let items = [];
+        for (let i = 1; i < 7; i += 1) {
+          items.push(b["item" + i]);
 
+        }
+        let champThumbSrc = 'url("http://ddragon.leagueoflegends.com/cdn/' + version + "/img/champion/" + champjson["data"][champID]["image"]["full"] + '")';
+        myDiv.classList.add("loaded-build");
+        myDiv.setAttribute("onclick",
+          "selectBuild(\""
+          + champID + "\","
+          + "\"" + buildTitle + "\","
+          + "\"" + items[0] + "\","
+          + "\"" + items[1] + "\","
+          + "\"" + items[2] + "\","
+          + "\"" + items[3] + "\","
+          + "\"" + items[4] + "\","
+          + "\"" + items[5] + "\")"
+        );
+
+        myDiv.style.backgroundImage = champThumbSrc;
         for (let item = 1; item <= 6; item += 1) {
           let myitemImg = document.createElement("img");
-          myitemImg.setAttribute("class", "item-thumb");
-          curItem = buildsArr[i]["item" + item];
-          if(curItem != undefined && curItem != null && curItem != 0){
-              let itemThumb =
+          myitemImg.classList.add("item-thumb");
+          curItem = items[item];
+          if (curItem != undefined && curItem != null && curItem != 0) {
+            let itemThumb =
               "http://ddragon.leagueoflegends.com/cdn/" +
               version +
               "/img/item/" +
-              itemjson["data"][curItem]["image"]["full"];
-              myitemImg.src = itemThumb;
-            }
+              allItems[curItem]["image"]["full"];
+            myitemImg.src = itemThumb;
+          }
           myDiv.appendChild(myitemImg);
         }
         document.getElementById("list-container").appendChild(myDiv);
@@ -953,6 +943,23 @@ function popAllSaves(buildsArr) {
     };
   };
 }
-function selectBuild(name, btitle, i1, i2, i3, i4, i5, i6) {
-selectChampion(name);
-}
+
+
+// function selectBuild(championName, buildTitle, item1, item2, item3, item4, item5, item6) {
+//   selectedItemsArr.length = 0;
+
+//   if (item1 != 0) { selectedItemsArr.push(item1); }
+//   if (item2 != 0) { selectedItemsArr.push(item2); }
+//   if (item3 != 0) { selectedItemsArr.push(item3); }
+//   if (item4 != 0) { selectedItemsArr.push(item4); }
+//   if (item5 != 0) { selectedItemsArr.push(item5); }
+//   if (item6 != 0) { selectedItemsArr.push(item6); }
+//   console.log(selectedItemsArr);
+//   selectChampion(championName);
+//   selectedItemSlotID = 1;
+//   selectedItemsArr.forEach(item =>{
+//     selectItem(item);
+//     selectedItemSlotID++;
+//   })
+
+// }

@@ -236,7 +236,7 @@ function popAllItems() {
     request.onload = function () {
         document.getElementById("list-container").innerHTML = "";
         var json = request.response;
-        allItems = json["data"]; // FIXME: kanske ta bort
+        allItems = json["data"];
         for (items in json["data"]) {
             let myDiv = document.createElement("div");
             myDiv.setAttribute("class", "item-container");
