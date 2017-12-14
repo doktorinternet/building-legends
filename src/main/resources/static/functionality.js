@@ -357,7 +357,7 @@ function selectItem(itemID) {
   request.open("GET", requestURL, true);
   request.responseType = "json";
   request.send();
-  
+
   request.onload = function () {
     var json = request.response;
     var thumbSrc = 'url("http://ddragon.leagueoflegends.com/cdn/' + version + "/img/item/" + json["data"][itemID]["image"]["full"] + '")';
@@ -905,26 +905,16 @@ function popAllSaves(buildsArr) {
         let champID = b["championName"];
         let buildTitle = b["buildtitle"];
         let items = [];
-        for (let i = 1; i < 7; i += 1) {
-          items.push(b["item" + i]);
+        for (let i = 1; i <= 6; i += 1) {
+          // items.push(b["item" + i]);
+          items[i - 1] = (b["item" + i]);
 
         }
         let champThumbSrc = 'url("http://ddragon.leagueoflegends.com/cdn/' + version + "/img/champion/" + champjson["data"][champID]["image"]["full"] + '")';
         myDiv.classList.add("loaded-build");
-        myDiv.setAttribute("onclick",
-          "selectBuild(\""
-          + champID + "\","
-          + "\"" + buildTitle + "\","
-          + "\"" + items[0] + "\","
-          + "\"" + items[1] + "\","
-          + "\"" + items[2] + "\","
-          + "\"" + items[3] + "\","
-          + "\"" + items[4] + "\","
-          + "\"" + items[5] + "\")"
-        );
 
         myDiv.style.backgroundImage = champThumbSrc;
-        for (let item = 1; item <= 6; item += 1) {
+        for (let item = 0; item < 6; item += 1) {
           let myitemImg = document.createElement("img");
           myitemImg.classList.add("item-thumb");
           curItem = items[item];
@@ -938,6 +928,21 @@ function popAllSaves(buildsArr) {
           }
           myDiv.appendChild(myitemImg);
         }
+        myDiv.addEventListener("click", (e) => {
+          selectBuild(champID, buildTitle, items, e.currentTarget);
+        });
+        // ("onclick",
+        //   "selectBuild(\""
+        //   + champID + "\","
+        //   + "\"" + buildTitle + "\","
+        //   // + "\"" + items[0] + "\","
+        //   // + "\"" + items[1] + "\","
+        //   // + "\"" + items[2] + "\","
+        //   // + "\"" + items[3] + "\","
+        //   // + "\"" + items[4] + "\","
+        //   + "\"" + imgArr + "\","
+        //   + "\"" + items + "\")"
+        // );
         document.getElementById("list-container").appendChild(myDiv);
       }
     };
@@ -945,21 +950,41 @@ function popAllSaves(buildsArr) {
 }
 
 
-// function selectBuild(championName, buildTitle, item1, item2, item3, item4, item5, item6) {
-//   selectedItemsArr.length = 0;
+function selectBuild(championName, buildTitle, items, me) {
+  let meChilds = me.childNodes;
+  console.log(items);
+  console.log(championName);
+  selectChampion(championName);
+  for (let i = 1; i <= 6; i += 1) {
+    selectedItemsArr[i - 1] = items[i - 1];
+    console.log(document.getElementById("item-slot-" + i));
+    console.log(meChilds[i - 1].currentSrc);
+    let stoopid = document.getElementById("item-slot-" + i);
+    stoopid.style.backgroundImage = "url(\"" + meChilds[i - 1].currentSrc + "\")";
+  }
 
-//   if (item1 != 0) { selectedItemsArr.push(item1); }
-//   if (item2 != 0) { selectedItemsArr.push(item2); }
-//   if (item3 != 0) { selectedItemsArr.push(item3); }
-//   if (item4 != 0) { selectedItemsArr.push(item4); }
-//   if (item5 != 0) { selectedItemsArr.push(item5); }
-//   if (item6 != 0) { selectedItemsArr.push(item6); }
-//   console.log(selectedItemsArr);
-//   selectChampion(championName);
-//   selectedItemSlotID = 1;
-//   selectedItemsArr.forEach(item =>{
-//     selectItem(item);
-//     selectedItemSlotID++;
-//   })
+  // let itemArr = [item1, item2, item3, item4, item5, item6];
+  // for (let i = 1; i<=6; i+=1){
+  //   selectedItemSlotID = i;
+  //   if(itemArr[i -1] != undefined && itemArr[i -1] != null && itemArr[i -1] != 0){
+  //     selectItem(itemArr[i - 1]);
+  //   }
+  // }
 
-// }
+
+  // selectedItemsArr.length = 0;
+  // if (item1 != 0) { selectedItemsArr.push(item1); }
+  // if (item2 != 0) { selectedItemsArr.push(item2); }
+  // if (item3 != 0) { selectedItemsArr.push(item3); }
+  // if (item4 != 0) { selectedItemsArr.push(item4); }
+  // if (item5 != 0) { selectedItemsArr.push(item5); }
+  // if (item6 != 0) { selectedItemsArr.push(item6); }
+  // console.log(selectedItemsArr);
+  // selectChampion(championName);
+  // selectedItemSlotID = 1;
+  // selectedItemsArr.forEach(item =>{
+  //   selectItem(item);
+  //   selectedItemSlotID++;
+  // })
+
+}
