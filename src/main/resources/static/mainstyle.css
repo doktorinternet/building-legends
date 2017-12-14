@@ -57,7 +57,6 @@ header p {
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 15px;
   border: solid 1px black;
-  padding: 5px;
   margin: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
@@ -98,6 +97,16 @@ header p {
 }
 
 #list-container .item-container {
+  height: 160px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.3);
+}
+
+#list-container .build-container {
   height: 160px;
   padding-top: 20px;
   display: flex;
@@ -258,11 +267,6 @@ header p {
   min-height: 200px;
 }
 
-#ability-info-container #ability-info {
-  width: 500px;
-  height: 200px;
-}
-
 #stats-container {
   flex: 1 1 auto;
   order: 4;
@@ -298,17 +302,19 @@ header p {
   min-height: 200px;
 }
 
-#item-info-container > div {
-  width: 500px;
+.info-text-list {
+  width: 100%;
   height: 200px;
+  margin: auto;
+  padding-right: 50px;
   overflow: auto;
 }
 
-#item-info-container > div ul {
+.info-text-list ul {
   list-style-type: none;
 }
 
-#item-info-container > div ul li {
+.info-text-list ul li {
   margin: 10px;
 }
 
@@ -375,6 +381,7 @@ header p {
 }
 
 #bars > div {
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;

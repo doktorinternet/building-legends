@@ -27,11 +27,11 @@
                     <div id="bars">
                         <div id="health-bar">
                             <p>Health: </p>
-                            <p id="health-pool">0000</p>
+                            <p id="health-pool"></p>
                         </div>
                         <div id="mana-bar">
                             <p>Mana: </p>
-                            <p id="mana-pool">0000</p>
+                            <p id="mana-pool"></p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
             <div id="right-container">
 
                 <div class="small-container" id="ability-info-container">
-                    <div id="ability-info"></div>
+                    <div class="info-text-list" id="ability-info"></div>
                 </div>
                 <div class="small-container" id="stats-container">
                     <table id="stats-table">
@@ -151,12 +151,12 @@
                     </table>
                 </div>
                 <div class="small-container" id="item-info-container">
-                    <div id="item-info"></div>
+                    <div class="info-text-list" id="item-info"></div>
                 </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="../static/getTest.js" th:src="@{/getTest.js}"></script>
+        <script src="../static/functionality.js" th:src="@{/functionality.js}"></script>
     </div>
 </body>
 
