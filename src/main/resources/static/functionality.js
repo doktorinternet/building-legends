@@ -133,6 +133,7 @@ function popAllChampions() {
 
 function selectChampion(champID) {
   selectedChampion = champID;
+  document.getElementById("champion-name").innerText = setChampName(champID);
   var request = new XMLHttpRequest();
   var requestURL =
     "http://ddragon.leagueoflegends.com/cdn/" +
@@ -143,16 +144,6 @@ function selectChampion(champID) {
   request.send();
   request.onload = function () {
     var json = request.response;
-    // let coefficient = Math.random();
-    // let skin;
-    // if (coefficient < 0.34) {
-    //     skin = 0;
-    // } else if (coefficient > 0.34 && coefficient < 0.67) {
-    //     skin = 1;
-    // } else if (coefficient > 0.67 && coefficient < 1) {
-    //     skin = 2;
-    // }
-
     var backgroundImgSrc =
       'url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
       champID +
@@ -180,6 +171,20 @@ function selectChampion(champID) {
     displayAbilityTooltips(champID);
     setupStats();
   };
+}
+function setChampName(champID) {
+  let champName = champID.charAt(0);
+  for (let i = 1; i < champID.length; i++) {
+    if (isUpperCase(champID.charAt(i))) {
+      champName = champName.concat(" ");
+    }
+    champName = champName.concat(champID.charAt(i));
+  }
+  return champName;
+}
+
+function isUpperCase(letter) {
+  return letter.toUpperCase() == letter;
 }
 
 function extractChampionStats(champID, callback) {
@@ -313,31 +318,119 @@ function popAllItems() {
   request.onload = function () {
     document.getElementById("list-container").innerHTML = "";
     var json = request.response;
-    allItems = json["data"]; // FIXME: kanske ta bort
-    for (items in json["data"]) {
-      let myDiv = document.createElement("div");
-      myDiv.setAttribute("class", "item-container");
-      let myImg = document.createElement("img");
-      myImg.setAttribute("class", "item-thumb");
-      myImg.setAttribute("id", items);
-      myImg.setAttribute("onclick", "selectItem(this.id)");
-      myImg.src =
-        "http://ddragon.leagueoflegends.com/cdn/" +
-        version +
-        "/img/item/" +
-        json["data"][items]["image"]["full"];
-      let myNameDiv = document.createElement("div");
-      myNameDiv.setAttribute("class", "name-container");
-      let myName = document.createElement("span");
-      myName.innerText = json["data"][items]["name"];
-      myDiv.appendChild(myImg);
-      myNameDiv.appendChild(myName);
-      myDiv.appendChild(myNameDiv);
-      document.getElementById("list-container").appendChild(myDiv);
+    allItems = json["data"];
+
+    for (let items in json["data"]) {
+
+      if (itemQualifies(json["data"][items])) {
+        let myDiv = document.createElement("div");
+        myDiv.setAttribute("class", "item-container");
+        let myImg = document.createElement("img");
+        myImg.setAttribute("class", "item-thumb");
+        myImg.setAttribute("id", items);
+        myImg.setAttribute("onclick", "selectItem(this.id)");
+        myImg.src =
+          "http://ddragon.leagueoflegends.com/cdn/" +
+          version +
+          "/img/item/" +
+          json["data"][items]["image"]["full"];
+        let myNameDiv = document.createElement("div");
+        myNameDiv.setAttribute("class", "name-container");
+        let myName = document.createElement("span");
+        myName.innerText = json["data"][items]["name"];
+        myDiv.appendChild(myImg);
+        myNameDiv.appendChild(myName);
+        myDiv.appendChild(myNameDiv);
+        document.getElementById("list-container").appendChild(myDiv);
+      }
     }
   };
 }
 
+function itemQualifies(item) {
+  if (hasBadProperty(item)) {
+    return false;
+  }
+  if (hasBadTags(item)) {
+    return false;
+  }
+  if (hasBadDescription(item)) {
+    return false;
+  }
+  if (hasBadName(item)) {
+    return false;
+  }
+  return true;
+}
+
+function hasBadProperty(item) {
+  if (item.hasOwnProperty("consumed")) {
+    return true;
+  }
+  if (item.hasOwnProperty("inStore")) {
+    return true;
+  }
+  if (item.hasOwnProperty("consumeOnFull")) {
+    return true;
+  }
+  if (item.hasOwnProperty(item["requiredChampion"])) {
+    if (item["requiredChampion"] !== "Viktor") {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasBadTags(item) {
+  let tags = item["tags"];
+  for (let i = 0; i < tags.length; i++) {
+
+    if (tags[i] == "Trinket") {
+      return true;
+    }
+    if (tags[i] == "Vision") {
+      return true;
+    }
+    if (tags[i] == "Consumable") {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasBadDescription(item) {
+  let description = item["description"];
+  if (description.indexOf("Shackle") > -1) {
+    return true;
+  }
+  if (description.indexOf("Singularity") > -1) {
+    return true;
+  }
+  if (description.indexOf("Dark Star") > -1) {
+    return true;
+  }
+  if (description.indexOf("Stars") > -1) {
+    return true;
+  }
+  if (description.indexOf("consumable") > -1) {
+    return true;
+  }
+  return false;
+}
+
+function hasBadName(item) {
+  let name = item["name"];
+  if (name.indexOf("Quick Charge") > -1) {
+    return true;
+  }
+  if (item == "3042") {
+    return true;
+  }
+  if (item["name"] == "Broken Stopwatch") {
+    return true;
+  }
+  return false;
+}
 function selectItemSlot(slot, slotID) {
   popAllItems();
   slot.style.backgroundImage = 'url("./images/SelectItem' + slotID + '.png")';
@@ -659,8 +752,12 @@ function saveBuild() {
   xmlHttp.onreadystatechange = function () {
     let feedback = xmlHttp.response;
     let feedbackElement = document.getElementById("feedback-text");
-    feedbackElement.innerText = feedback;
-  };
+    if (feedback != success) {
+      feedbackElement.innerText = "Could not save build! Make sure you put items in the slots, or refresh the page."
+    } else {
+      feedbackElement.innerText = "Build saved"; //TODO: 
+    }
+  }
 }
 
 function loadBuilds() {
@@ -840,43 +937,6 @@ function resetStats() {
   itemStats["item-info"] = "";
 }
 
-// function loadJSON(callback) {
-//     let runeData = "./json/perks.json"
-
-//     var xobj = new XMLHttpRequest();
-//     xobj.overrideMimeType("application/json");
-//     xobj.open('GET', runeData, true);
-//     xobj.onreadystatechange = function () {
-//         if (xobj.readyState == 4 && xobj.status == "200") {
-//             // .open will NOT return a value but simply returns undefined in async mode so use a callback
-//             callback(xobj.responseText);
-//         }
-//     }
-//     xobj.send(null);
-
-// }
-
-// function handleRunes(response) {
-//     // Do Something with the response e.g.
-//     jsonresponse = JSON.parse(response);
-//     for (let perk in jsonresponse) {
-
-//         let mySpan = document.createElement("span");
-//         let myImg = document.createElement("img");
-//         let myTitle = document.createElement("span");
-//         myImg.src = jsonresponse.
-//             myTitle.innerText = champions["data"][champion]["name"];
-//         mySpan.appendChild(myImg);
-//         mySpan.appendChild(myTitle);
-//     }
-//     document.getElementById("searchRow").appendChild(mySpan);
-// }
-
-// function showtyInfoListener(e) {
-
-//     e.id
-// }
-
 function popAllSaves(buildsArr) {
   var champRequest = new XMLHttpRequest();
   var champRequestURL =
@@ -931,18 +991,6 @@ function popAllSaves(buildsArr) {
         myDiv.addEventListener("click", (e) => {
           selectBuild(champID, buildTitle, items, e.currentTarget);
         });
-        // ("onclick",
-        //   "selectBuild(\""
-        //   + champID + "\","
-        //   + "\"" + buildTitle + "\","
-        //   // + "\"" + items[0] + "\","
-        //   // + "\"" + items[1] + "\","
-        //   // + "\"" + items[2] + "\","
-        //   // + "\"" + items[3] + "\","
-        //   // + "\"" + items[4] + "\","
-        //   + "\"" + imgArr + "\","
-        //   + "\"" + items + "\")"
-        // );
         document.getElementById("list-container").appendChild(myDiv);
       }
     };
@@ -962,29 +1010,4 @@ function selectBuild(championName, buildTitle, items, me) {
     let stoopid = document.getElementById("item-slot-" + i);
     stoopid.style.backgroundImage = "url(\"" + meChilds[i - 1].currentSrc + "\")";
   }
-
-  // let itemArr = [item1, item2, item3, item4, item5, item6];
-  // for (let i = 1; i<=6; i+=1){
-  //   selectedItemSlotID = i;
-  //   if(itemArr[i -1] != undefined && itemArr[i -1] != null && itemArr[i -1] != 0){
-  //     selectItem(itemArr[i - 1]);
-  //   }
-  // }
-
-
-  // selectedItemsArr.length = 0;
-  // if (item1 != 0) { selectedItemsArr.push(item1); }
-  // if (item2 != 0) { selectedItemsArr.push(item2); }
-  // if (item3 != 0) { selectedItemsArr.push(item3); }
-  // if (item4 != 0) { selectedItemsArr.push(item4); }
-  // if (item5 != 0) { selectedItemsArr.push(item5); }
-  // if (item6 != 0) { selectedItemsArr.push(item6); }
-  // console.log(selectedItemsArr);
-  // selectChampion(championName);
-  // selectedItemSlotID = 1;
-  // selectedItemsArr.forEach(item =>{
-  //   selectItem(item);
-  //   selectedItemSlotID++;
-  // })
-
 }

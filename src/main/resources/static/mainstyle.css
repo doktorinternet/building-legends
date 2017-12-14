@@ -150,6 +150,7 @@ header p {
   justify-self: center;
   vertical-align: middle;
   font-size: 1em;
+  text-shadow: 1px 1px 2px black;
 }
 
 #left-container {
@@ -397,6 +398,7 @@ header p {
 }
 
 #bars > div p {
+  text-shadow: 1px 1px 2px black;
   color: white;
 }
 
@@ -445,6 +447,8 @@ header p {
   background-color: rgba(228, 176, 86, 0.8);
   -webkit-border-radius: 8px;
 }
+
+/*--------------------------------------------------------------------------*/
  
 
  /*# sourceMappingURL= mainstyle.css.map */
