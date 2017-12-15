@@ -47,6 +47,10 @@ header p {
   order: 2;
 }
 
+#loggedin {
+  margin: 5px;
+}
+
 #left-header {
   display: flex;
   align-content: center;
