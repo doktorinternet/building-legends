@@ -4,6 +4,7 @@ import antonslakejer.buildinglegends.Repository.ScoreRepository;
 import antonslakejer.buildinglegends.domain.Build;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,12 +29,19 @@ public class LegendController {
     }
 
     @PostMapping("/newuser")
-    public ModelAndView registerNewUser(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+    public ModelAndView registerNewUser(@RequestParam(required = false) String username,
+                                        @RequestParam(required = false) String password,
+                                        @RequestParam(required = false) String email) {
+        if (username == null || password == null || email == null) {
+            return new ModelAndView("/legendbuilder")
+                    .addObject("registrationError", "All fields required");
+        }
         String answer = scoreRepository.addMember(username, password, email);
         if (answer.equals("")) {
-            return new ModelAndView("/login");
+            return new ModelAndView("/legendbuilder");
         } else {
-            return new ModelAndView("/newuser").addObject("registrationError", answer);
+
+            return new ModelAndView("/legendbuilder").addObject("registrationError", answer);
         }
     }
 
@@ -47,7 +55,7 @@ public class LegendController {
 
     @GetMapping("/loadBuilds")
     @ResponseBody
-    public String loadBuilds(HttpSession session){
+    public String loadBuilds(HttpSession session) {
         return scoreRepository.getBuilds((String) session.getAttribute("user"));
     }
 
@@ -56,10 +64,10 @@ public class LegendController {
         String answer = scoreRepository.validateLogin(username, password);
         if (answer.equals(username)) {
             session.setAttribute("user", username);
-            return "legendbuilder";
+//            return "legendbuilder";
         } else
             session.setAttribute("loginError", answer);
-        return "login";
+        return "legendbuilder";
     }
 
     @GetMapping("/logout")
@@ -76,8 +84,11 @@ public class LegendController {
         if (session.getAttribute("user") != null) {
 //            session.setAttribute("build", new Build());
             return new ModelAndView("legendbuilder");
+        } else {
+            session.setAttribute("user", "! You are not logged in.");
+            return new ModelAndView("legendbuilder");
+
         }
-        return new ModelAndView("login");
     }
 
 }

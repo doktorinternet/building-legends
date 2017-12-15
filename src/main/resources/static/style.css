@@ -11,6 +11,10 @@ body {
     }*/
 }
 
+.hidden {
+  display: none;
+}
+
 header {
   position: fixed;
   left: 0%;

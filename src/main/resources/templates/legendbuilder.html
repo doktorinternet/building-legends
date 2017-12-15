@@ -10,18 +10,48 @@
 <body>
     <div id="main-container">
         <header>
-            <span>Välkommen till LegendBuilder!</span>
-            <button onclick="saveBuild()">Save build</button>
-            <button onclick="loadBuilds()">Load saved builds</button>
-            <span id="feedback-text"></span>
-            <form action="login" method="get">
-                <input name="submit" type="submit" value="Sign In" />
-            </form>
-    
-            <form action="newuser" method="get">
-                <input name="submit" type="submit" value="Sign Up" />
-            </form>
-        </header>
+            <div id="left-header">
+                <div id="buildButtons">
+                    <button class="myButton" onclick="saveBuild()">Save build</button>
+                    <button class="myButton" onclick="loadBuilds()">Load saved builds</button>
+                    <span id="feedback-text"></span>
+                </div>
+            </div>
+            <h1 id="center-header">Legendbuilder</h1>
+
+            <div id="right-header">
+                <div id="show-login" onclick="showLogIn()">Log in</div>
+                <form id="login-form" class="hidden" action="login" method="post">
+                    <!-- <input name="submit" type="submit" value="Sign In" /> -->
+                    <input id="username-input-login" name="username" type="text" onmouseover="modifyText(this)" onmouseout="modifyText(this)"
+                    placeholder="Username" />
+                    <input id="password-input-login" name="password" type="password" onmouseover="modifyText(this)" onmouseout="modifyText(this)"
+                    placeholder="Password" />
+                    <input type="submit" class="myButton" value="Login" onclick="function iii(){window.setTimeout(checkLoggedIn(), 10)}"/>
+                </form>
+                
+                <div id="show-signup" onclick="showSignUp()">Sign up</div>
+                <form id="signup-form" class="hidden" action="newuser" method="post">
+                    <input id="username-input-signup" name="username" type="text" onmouseover="modifyText(this)" onmouseout="modifyText(this)"
+                    value="Username" />
+                    <input id="password-input-signup" name="password" type="password" onmouseover="modifyText(this)" onmouseout="modifyText(this)"
+                    value="Password" />
+                    <!-- <input id="safety-password-input" name="password" type="password" onmouseover="modifyText(this)" onmouseout="modifyText(this)"
+                        value="Password" /> -->
+                        <input id="email-input" onmouseover="modifyText(this)" name="email" type="email" />
+                        <input name="submit" class="myButton" type="submit" value="Sign Up" />
+                    </form>
+                    
+                    <form id="logout-form" class="hidden" action="logout" method="get">
+                        <input type="submit" value="Sign out" class="myButton" />
+                    </form>
+                    
+                    <div>
+                        <p th:text="${registrationError}"></p>
+                    </div>
+                    <span id="loggedin" th:text="${session.user}"></span>
+                </div>
+            </header>
         <div id="content-container">
             <div id="left-container">
                 <div id="search-container"></div>

@@ -592,7 +592,9 @@ function clearTags(description) {
     "<unique>",
     "</unique>",
     "<hr>",
-    "<br><br>"
+    "<br><br>",
+    "<font color='#8C8C8C' size='16'>",
+
   ];
 
   if (description.indexOf("<stats>") > -1) {
@@ -656,8 +658,6 @@ function extractRegen(description) {
     Mana: 0
   };
   let regens = ["Health", "Mana"];
-
-  // let mana = "Mana";
   for (let i = 0; i < regens.length; i += 1) {
     let endIndex = baseStats.indexOf("% Base " + regens[i] + " Regen");
     let startIndex = endIndex - 3;
@@ -997,7 +997,6 @@ function popAllSaves(buildsArr) {
   };
 }
 
-
 function selectBuild(championName, buildTitle, items, me) {
   let meChilds = me.childNodes;
   console.log(items);
@@ -1011,3 +1010,93 @@ function selectBuild(championName, buildTitle, items, me) {
     stoopid.style.backgroundImage = "url(\"" + meChilds[i - 1].currentSrc + "\")";
   }
 }
+
+function modifyText(e) {
+
+  if (e.defaultValue == e.value) {
+    e.value = "";
+  }
+  else if (e.value == "") {
+    e.value = e.defaultValue;
+  }
+
+  // let text = e.value;
+
+  // if (text == "Username" || text == "Password") {
+  //   e.value = "";
+  // } else if (text == "") {
+  //   if (e.id.indexOf("username") > -1) {
+  //     e.value = "Username";
+  //   } else if (e.id.indexOf("password")) {
+  //     e.value = "Password";
+  //   } else if (e.id.indexOf("email")) {
+  //     e.value = "Email adress";
+  //   }
+  // }
+}
+
+function showLogIn() {
+  let loginForm = document.getElementById("login-form");
+  loginForm.classList.remove("hidden");
+  let showLoginDiv = document.getElementById("show-login");
+  showLoginDiv.classList.add("hidden");
+  hideSignUp();
+}
+
+function showSignUp() {
+  let signUpForm = document.getElementById("signup-form");
+  signUpForm.classList.remove("hidden");
+  let showSignUpDiv = document.getElementById("show-signup");
+  showSignUpDiv.classList.add("hidden");
+  hideLogin();
+}
+
+function hideLogin() {
+  let loginForm = document.getElementById("login-form");
+  if (!loginForm.classList.contains("hidden")) {
+    console.log("hide login form");
+    loginForm.classList.add("hidden");
+  }
+  let showLoginDiv = document.getElementById("show-login");
+  if (showLoginDiv.classList.contains("hidden")) {
+    showLoginDiv.classList.remove("hidden");
+  }
+}
+
+function hideSignUp() {
+  let signUpForm = document.getElementById("signup-form");
+  if (!signUpForm.classList.contains("hidden")) {
+    signUpForm.classList.add("hidden");
+  }
+  let showSignUpDiv = document.getElementById("show-signup");
+  if (showSignUpDiv.classList.contains("hidden")) {
+    showSignUpDiv.classList.remove("hidden");
+  }
+}
+
+window.onload = function () {
+  let loggedin = document.getElementById("loggedin");
+  if (!loggedin.innerText.length == 0) {
+    document.getElementById("logout-form").classList.remove("hidden");
+    document.getElementById("buildButtons").classList.remove("hidden");
+    document.getElementById("show-login").classList.add("hidden");
+    document.getElementById("show-signup").classList.add("hidden");
+  } else if (document.getElementById("logout-form").classList.contains("hidden")) {
+    document.getElementById("show-login").classList.remove("hidden");
+    document.getElementById("show-signup").classList.remove("hidden");
+    document.getElementById("logout-form").classList.add("hidden");
+    document.getElementById("buildButtons").classList.add("hidden");
+  }
+}
+function checkLoggedIn() {
+  let loggedin = document.getElementById("loggedin");
+  if (!loggedin.innerText.indexOf("You are not logged in") > -1) {
+    document.getElementById("logout-form").classList.remove("hidden");
+    document.getElementById("buildButtons").classList.remove("hidden");
+    document.getElementById("buildButtons").classList.remove("hidden");
+  } else if (document.getElementById("logout-form").classList.contains("hidden")) {
+    document.getElementById("logout-form").classList.add("hidden");
+    document.getElementById("buildButtons").classList.add("hidden");
+  }
+}
+
